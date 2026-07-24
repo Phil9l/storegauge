@@ -1,0 +1,52 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  theme?: "dark" | "light";
+}
+
+const {
+  title,
+  description,
+  theme = "light"
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const image = new URL(`${base}assets/storegauge-social.png`, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content={theme === "dark" ? "#08101f" : "#f4f7fb"} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={`${base}assets/storegauge.svg`} />
+    <link rel="apple-touch-icon" href={`${base}assets/storegauge-icon.png`} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta name="twitter:card" content="summary" />
+    <title>{title}</title>
+  </head>
+  <body class:list={[`theme-${theme}`]}>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header theme={theme} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

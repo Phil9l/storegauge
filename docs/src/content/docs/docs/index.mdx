@@ -1,0 +1,42 @@
+---
+title: StoreGauge documentation
+description: Connect App Store Connect and Google Play, understand your dashboard, and configure local MCP access.
+template: splash
+hero:
+  tagline: Connect your stores, understand the dashboard, and keep StoreGauge working quietly on your Mac.
+  actions:
+    - text: Get started
+      link: ./getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/Phil9l/storegauge
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid>
+  <Card title="Connect App Store Connect" icon="seti:apple">
+    Create a Team API key, add the optional vendor number, and understand exactly where each credential is stored.
+  </Card>
+  <Card title="Connect Google Play" icon="seti:android">
+    Configure the two Google APIs, invite a service account, and enable statistics or financial reports.
+  </Card>
+  <Card title="Work through reviews" icon="comment">
+    Triage, translate, reply, edit, copy, and export feedback from both stores.
+  </Card>
+  <Card title="Connect a local agent" icon="puzzle">
+    Give Codex, Claude, or another MCP client controlled read-only access to a sanitized StoreGauge snapshot.
+  </Card>
+</CardGrid>
+
+## How StoreGauge handles your data
+
+StoreGauge has no sign-in or hosted service. Store credentials go to macOS Keychain, imported product data stays in SwiftData, and optional MCP sharing uses a separate credential-free snapshot. See the [privacy page](../privacy/) for the complete data-flow description.
+
+## Requirements
+
+- macOS 26.1 or later
+- An App Store Connect account with access to create a Team API key, a Google Play developer account, or both
+- Xcode 26.3 or later only when building from source

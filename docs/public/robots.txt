@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://phil9l.github.io/storegauge/sitemap-index.xml

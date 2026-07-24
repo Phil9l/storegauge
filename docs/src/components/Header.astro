@@ -1,0 +1,40 @@
+---
+interface Props {
+  theme?: "dark" | "light";
+}
+
+const { theme = "light" } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+---
+
+<header class:list={["site-header", `site-header--${theme}`]}>
+  <nav class="container nav" aria-label="Primary navigation">
+    <a class="wordmark" href={base} aria-label="StoreGauge home">
+      <img src={`${base}assets/storegauge.svg`} alt="" width="34" height="35" />
+      <span>StoreGauge</span>
+    </a>
+
+    <div class="nav-links">
+      <a href={`${base}#product`}>Product</a>
+      <a href={`${base}#privacy`}>Privacy</a>
+      <a href={`${base}#mcp`}>MCP</a>
+      <a href={`${base}docs/`}>Docs</a>
+      <a href="https://github.com/Phil9l/storegauge">GitHub</a>
+      <a class="nav-download" href="https://github.com/Phil9l/storegauge/releases/latest">Download</a>
+    </div>
+
+    <details class="mobile-nav">
+      <summary aria-label="Open navigation"><span></span><span></span></summary>
+      <div>
+        <a href={`${base}#product`}>Product</a>
+        <a href={`${base}#privacy`}>Privacy</a>
+        <a href={`${base}#mcp`}>MCP</a>
+        <a href={`${base}docs/`}>Documentation</a>
+        <a href="https://github.com/Phil9l/storegauge">GitHub</a>
+        <a href="https://github.com/Phil9l/storegauge/releases/latest">Download StoreGauge</a>
+      </div>
+    </details>
+  </nav>
+</header>

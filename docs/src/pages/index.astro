@@ -1,0 +1,233 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AgentDemo from "../components/AgentDemo.astro";
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+---
+
+<BaseLayout
+  title="StoreGauge — Your app-store business, kept on your Mac"
+  description="A private, native macOS dashboard for App Store Connect and Google Play, with optional read-only MCP access for local agents."
+  theme="dark"
+>
+  <div class="hero-shell">
+    <section class="container hero">
+      <div class="hero-copy">
+        <p class="kicker">Native macOS · Local first</p>
+        <h1>Both stores.<br /><span>One private view.</span></h1>
+        <p class="hero-lede">
+          App Store Connect and Google Play in one native dashboard. Metrics, reviews, releases,
+          and vitals stay on your Mac.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="https://github.com/Phil9l/storegauge/releases/latest">Download StoreGauge <span aria-hidden="true">↓</span></a>
+          <a class="button button-secondary" href={`${base}docs/`}>Read the documentation <span aria-hidden="true">→</span></a>
+        </div>
+        <p class="requirements">Requires macOS 26.1 or later · Apple silicon and Intel</p>
+      </div>
+      <figure class="product-shot">
+        <button
+          class="product-shot-trigger"
+          type="button"
+          aria-label="Open the StoreGauge screenshot at full size"
+          data-screenshot-open
+          data-screenshot-src={`${base}assets/storegauge-dashboard.png`}
+          data-screenshot-alt="StoreGauge showing one app’s proceeds, downloads, rating, reviews, and release status"
+        >
+          <img
+            src={`${base}assets/storegauge-dashboard.png`}
+            alt="StoreGauge showing one app’s proceeds, downloads, rating, reviews, and release status"
+            width="2704"
+            height="1864"
+            fetchpriority="high"
+          />
+          <span>View full size ↗</span>
+        </button>
+        <figcaption>One app, both stores, with MCP ready in the status bar.</figcaption>
+      </figure>
+      <dialog class="screenshot-dialog" aria-label="StoreGauge screenshot" data-screenshot-dialog>
+        <form method="dialog"><button type="submit" aria-label="Close screenshot">Close <span aria-hidden="true">×</span></button></form>
+        <img
+          src={`${base}assets/storegauge-dashboard.png`}
+          alt="StoreGauge showing one app’s proceeds, downloads, rating, reviews, and release status"
+          width="2704"
+          height="1864"
+          loading="lazy"
+        />
+      </dialog>
+    </section>
+  </div>
+
+  <div class="trust-strip" aria-label="Product principles">
+    <div class="container">
+      <span><i></i>No StoreGauge account</span>
+      <span><i></i>No analytics SDK</span>
+      <span><i></i>No hosted database</span>
+      <span><i></i>Keys in Keychain</span>
+      <span><i></i>Source available</span>
+    </div>
+  </div>
+
+  <section class="section product-section" id="product">
+    <div class="container">
+      <div class="section-heading">
+        <p class="kicker">A daily view, not another console</p>
+        <h2>See what changed across every app you ship.</h2>
+      </div>
+
+      <div class="product-gallery">
+        <figure class="product-card">
+          <button
+            class="product-visual"
+            type="button"
+            aria-label="Open the reviews screenshot at full size"
+            data-screenshot-open
+            data-screenshot-src={`${base}assets/storegauge-reviews.png`}
+            data-screenshot-alt="StoreGauge reviews inbox with filters, translations, reply status, and responses"
+          >
+            <img src={`${base}assets/storegauge-reviews-preview.webp`} alt="StoreGauge reviews inbox" width="2704" height="1848" loading="lazy" />
+            <span>View full size ↗</span>
+          </button>
+          <figcaption><span>One review inbox</span><strong>Translate, triage, reply, and keep the history.</strong></figcaption>
+        </figure>
+
+        <figure class="product-card">
+          <button
+            class="product-visual"
+            type="button"
+            aria-label="Open the releases screenshot at full size"
+            data-screenshot-open
+            data-screenshot-src={`${base}assets/storegauge-releases.png`}
+            data-screenshot-alt="StoreGauge app detail showing production status and metadata history"
+          >
+            <img src={`${base}assets/storegauge-releases-preview.webp`} alt="StoreGauge release and metadata history" width="2704" height="1848" loading="lazy" />
+            <span>View full size ↗</span>
+          </button>
+          <figcaption><span>Release context</span><strong>Production state, rollouts, and metadata changes.</strong></figcaption>
+        </figure>
+
+        <figure class="product-card product-card--menu">
+          <button
+            class="product-visual"
+            type="button"
+            aria-label="Open the menu-bar screenshot at full size"
+            data-screenshot-open
+            data-screenshot-src={`${base}assets/storegauge-menu-bar.png`}
+            data-screenshot-alt="StoreGauge menu-bar popover with seven-day proceeds, downloads, and reviews needing a reply"
+          >
+            <img src={`${base}assets/storegauge-menu-bar-preview.webp`} alt="StoreGauge menu-bar popover" width="790" height="638" loading="lazy" />
+            <span>View full size ↗</span>
+          </button>
+          <figcaption><span>Between syncs</span><strong>Seven-day totals and pending reviews from the menu bar.</strong></figcaption>
+        </figure>
+
+        <figure class="product-card product-card--widgets">
+          <button
+            class="product-visual"
+            type="button"
+            aria-label="Open the widgets screenshot at full size"
+            data-screenshot-open
+            data-screenshot-src={`${base}assets/storegauge-widgets.png`}
+            data-screenshot-alt="StoreGauge performance widget on the macOS desktop"
+          >
+            <img src={`${base}assets/storegauge-widgets-preview.webp`} alt="StoreGauge performance widget" width="728" height="1075" loading="lazy" />
+            <span>View full size ↗</span>
+          </button>
+          <figcaption><span>At a glance</span><strong>Portfolio performance where you already look.</strong></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section privacy-section" id="privacy">
+    <div class="container privacy-grid">
+      <div class="section-heading">
+        <p class="kicker">Local means local</p>
+        <h2>Your store data does not become our business.</h2>
+        <p>
+          StoreGauge talks directly to Apple and Google. There is no account, backend, telemetry,
+          or cloud database in the middle.
+        </p>
+        <a class="privacy-link" href={`${base}privacy/`}>Read the full privacy details →</a>
+      </div>
+
+      <div class="privacy-map" aria-label="Data travels directly from the app stores to StoreGauge on your Mac">
+        <div class="privacy-route">
+          <span>Apple + Google</span>
+          <i aria-hidden="true">→</i>
+          <strong>StoreGauge</strong>
+          <i aria-hidden="true">→</i>
+          <span>Your Mac</span>
+        </div>
+        <div class="privacy-proof">
+          <div><strong>Keychain</strong><span>Credentials</span></div>
+          <div><strong>SwiftData</strong><span>Product history</span></div>
+          <div><strong>On-device</strong><span>Translation</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section mcp-section" id="mcp">
+    <div class="container mcp-grid">
+      <div>
+        <div class="section-heading">
+          <p class="kicker">MCP for local agents</p>
+          <h2>Let your agent read the dashboard—not your credentials.</h2>
+          <p>
+            Ask Claude Code, Codex, or OpenCode about performance, reviews, and releases through a
+            bounded local snapshot.
+          </p>
+        </div>
+        <ul class="mcp-guards" aria-label="MCP privacy controls">
+          <li>Off by default</li>
+          <li>Read only</li>
+          <li>Local snapshot</li>
+          <li>You choose the scope</li>
+        </ul>
+      </div>
+
+      <AgentDemo />
+    </div>
+  </section>
+
+  <section class="section source-available">
+    <div class="container source-available-grid">
+      <div class="source-available-copy">
+        <p class="kicker">Source available</p>
+        <h2>Inspect it. Build it locally. Know what it does.</h2>
+        <p>The app, store connectors, storage layer, and MCP helper are publicly auditable under the PolyForm Noncommercial License.</p>
+      </div>
+      <div class="source-available-actions">
+        <a class="button button-dark" href="https://github.com/Phil9l/storegauge/releases/latest">Download the latest release</a>
+        <a class="button" href="https://github.com/Phil9l/storegauge">Explore the source on GitHub →</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const screenshotDialog = document.querySelector('[data-screenshot-dialog]');
+    const screenshotImage = screenshotDialog?.querySelector('img');
+    const screenshotOpens = document.querySelectorAll('[data-screenshot-open]');
+    if (screenshotDialog instanceof HTMLDialogElement && screenshotImage instanceof HTMLImageElement) {
+      screenshotOpens.forEach((screenshotOpen) => {
+        screenshotOpen.addEventListener('click', () => {
+          const src = screenshotOpen.getAttribute('data-screenshot-src');
+          const alt = screenshotOpen.getAttribute('data-screenshot-alt');
+          if (src) screenshotImage.src = src;
+          if (alt) screenshotImage.alt = alt;
+          screenshotDialog.showModal();
+          requestAnimationFrame(() => {
+            screenshotDialog.scrollLeft = (screenshotDialog.scrollWidth - screenshotDialog.clientWidth) / 2;
+            screenshotDialog.scrollTop = (screenshotDialog.scrollHeight - screenshotDialog.clientHeight) / 2;
+          });
+        });
+      });
+      screenshotDialog.addEventListener('click', (event) => {
+        if (event.target === screenshotDialog) screenshotDialog.close();
+      });
+    }
+  </script>
+</BaseLayout>

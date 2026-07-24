@@ -1,0 +1,1209 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000013010000000000001 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = A10000033010000000000003 /* Sparkle */; };
+		A20000013020000000000001 /* MCP in Frameworks */ = {isa = PBXBuildFile; productRef = A20000033020000000000003 /* MCP */; };
+		A210000B302000000000000B /* storegauge-mcp in Embed MCP Server */ = {isa = PBXBuildFile; fileRef = A21000013020000000000001 /* storegauge-mcp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		BD5198C530099B8D00B40BD9 /* StoreGaugeWidgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BD5198C730099B8D00B40BD9 /* StoreGaugeWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A210000D302000000000000D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD51988F30099B8C00B40BD9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A21000073020000000000007;
+			remoteInfo = StoreGaugeMCP;
+		};
+		BD5198A730099B8D00B40BD9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD51988F30099B8C00B40BD9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD51989630099B8C00B40BD9;
+			remoteInfo = StoreGauge;
+		};
+		BD5198B130099B8D00B40BD9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD51988F30099B8C00B40BD9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD51989630099B8C00B40BD9;
+			remoteInfo = StoreGauge;
+		};
+		BD5198C430099B8D00B40BD9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD51988F30099B8C00B40BD9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD5198CD30099B8D00B40BD9;
+			remoteInfo = StoreGaugeWidgets;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A210000C302000000000000C /* Embed MCP Server */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				A210000B302000000000000B /* storegauge-mcp in Embed MCP Server */,
+			);
+			name = "Embed MCP Server";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD5198C630099B8D00B40BD9 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BD5198C530099B8D00B40BD9 /* StoreGaugeWidgets.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A21000013020000000000001 /* storegauge-mcp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "storegauge-mcp"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD51989730099B8C00B40BD9 /* StoreGauge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreGauge.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD5198A630099B8D00B40BD9 /* StoreGaugeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StoreGaugeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD5198B030099B8D00B40BD9 /* StoreGaugeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StoreGaugeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD5198C730099B8D00B40BD9 /* StoreGaugeWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StoreGaugeWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E10000013030000000000001 /* StoreGauge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreGauge.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		BD5198C330099B8D00B40BD9 /* Exceptions for "StoreGauge" folder in "StoreGauge" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = BD51989630099B8C00B40BD9 /* StoreGauge */;
+		};
+		BD5198C930099B8D00B40BD9 /* Exceptions for "StoreGaugeWidgets" folder in "StoreGaugeWidgets" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = BD5198CD30099B8D00B40BD9 /* StoreGaugeWidgets */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		A21000023020000000000002 /* StoreGaugeMCP */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = StoreGaugeMCP;
+			sourceTree = "<group>";
+		};
+		BD51989930099B8C00B40BD9 /* StoreGauge */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				BD5198C330099B8D00B40BD9 /* Exceptions for "StoreGauge" folder in "StoreGauge" target */,
+			);
+			path = StoreGauge;
+			sourceTree = "<group>";
+		};
+		BD5198A930099B8D00B40BD9 /* StoreGaugeTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = StoreGaugeTests;
+			sourceTree = "<group>";
+		};
+		BD5198B330099B8D00B40BD9 /* StoreGaugeUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = StoreGaugeUITests;
+			sourceTree = "<group>";
+		};
+		BD5198CA30099B8D00B40BD9 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		BD5198CB30099B8D00B40BD9 /* StoreGaugeWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				BD5198C930099B8D00B40BD9 /* Exceptions for "StoreGaugeWidgets" folder in "StoreGaugeWidgets" target */,
+			);
+			path = StoreGaugeWidgets;
+			sourceTree = "<group>";
+		};
+		E10000033030000000000003 /* StoreGaugeiOS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = StoreGaugeiOS;
+			sourceTree = "<group>";
+		};
+		E100000B303000000000000B /* StoreGaugeShared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			name = StoreGaugeShared;
+			path = StoreGauge;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A21000053020000000000005 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A20000013020000000000001 /* MCP in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD51989430099B8C00B40BD9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000013010000000000001 /* Sparkle in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD5198A330099B8D00B40BD9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD5198AD30099B8D00B40BD9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD5198CC30099B8D00B40BD9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E10000043030000000000004 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BD51988E30099B8C00B40BD9 = {
+			isa = PBXGroup;
+			children = (
+				BD51989930099B8C00B40BD9 /* StoreGauge */,
+				E10000033030000000000003 /* StoreGaugeiOS */,
+				BD5198CA30099B8D00B40BD9 /* Shared */,
+				A21000023020000000000002 /* StoreGaugeMCP */,
+				BD5198CB30099B8D00B40BD9 /* StoreGaugeWidgets */,
+				BD5198A930099B8D00B40BD9 /* StoreGaugeTests */,
+				BD5198B330099B8D00B40BD9 /* StoreGaugeUITests */,
+				BD51989830099B8C00B40BD9 /* Products */,
+				BDB3874C3013C52C0095A8DF /* Recovered References */,
+			);
+			sourceTree = "<group>";
+		};
+		BD51989830099B8C00B40BD9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BD51989730099B8C00B40BD9 /* StoreGauge.app */,
+				E10000013030000000000001 /* StoreGauge.app */,
+				A21000013020000000000001 /* storegauge-mcp */,
+				BD5198C730099B8D00B40BD9 /* StoreGaugeWidgets.appex */,
+				BD5198A630099B8D00B40BD9 /* StoreGaugeTests.xctest */,
+				BD5198B030099B8D00B40BD9 /* StoreGaugeUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BDB3874C3013C52C0095A8DF /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				E100000B303000000000000B /* StoreGaugeShared */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A21000073020000000000007 /* StoreGaugeMCP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A210000A302000000000000A /* Build configuration list for PBXNativeTarget "StoreGaugeMCP" */;
+			buildPhases = (
+				A21000043020000000000004 /* Sources */,
+				A21000053020000000000005 /* Frameworks */,
+				A21000063020000000000006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A21000023020000000000002 /* StoreGaugeMCP */,
+				BD5198CA30099B8D00B40BD9 /* Shared */,
+			);
+			name = StoreGaugeMCP;
+			packageProductDependencies = (
+				A20000033020000000000003 /* MCP */,
+			);
+			productName = "storegauge-mcp";
+			productReference = A21000013020000000000001 /* storegauge-mcp */;
+			productType = "com.apple.product-type.tool";
+		};
+		BD51989630099B8C00B40BD9 /* StoreGauge */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD5198BA30099B8D00B40BD9 /* Build configuration list for PBXNativeTarget "StoreGauge" */;
+			buildPhases = (
+				BD51989330099B8C00B40BD9 /* Sources */,
+				BD51989430099B8C00B40BD9 /* Frameworks */,
+				BD51989530099B8C00B40BD9 /* Resources */,
+				BD5198C630099B8D00B40BD9 /* Embed App Extensions */,
+				A210000C302000000000000C /* Embed MCP Server */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BD5198D030099B8D00B40BD9 /* PBXTargetDependency */,
+				A210000E302000000000000E /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				BD51989930099B8C00B40BD9 /* StoreGauge */,
+				BD5198CA30099B8D00B40BD9 /* Shared */,
+			);
+			name = StoreGauge;
+			packageProductDependencies = (
+				A10000033010000000000003 /* Sparkle */,
+			);
+			productName = StoreGauge;
+			productReference = BD51989730099B8C00B40BD9 /* StoreGauge.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BD5198A530099B8D00B40BD9 /* StoreGaugeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD5198BD30099B8D00B40BD9 /* Build configuration list for PBXNativeTarget "StoreGaugeTests" */;
+			buildPhases = (
+				BD5198A230099B8D00B40BD9 /* Sources */,
+				BD5198A330099B8D00B40BD9 /* Frameworks */,
+				BD5198A430099B8D00B40BD9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BD5198A830099B8D00B40BD9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				BD5198A930099B8D00B40BD9 /* StoreGaugeTests */,
+			);
+			name = StoreGaugeTests;
+			packageProductDependencies = (
+			);
+			productName = StoreGaugeTests;
+			productReference = BD5198A630099B8D00B40BD9 /* StoreGaugeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		BD5198AF30099B8D00B40BD9 /* StoreGaugeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD5198C030099B8D00B40BD9 /* Build configuration list for PBXNativeTarget "StoreGaugeUITests" */;
+			buildPhases = (
+				BD5198AC30099B8D00B40BD9 /* Sources */,
+				BD5198AD30099B8D00B40BD9 /* Frameworks */,
+				BD5198AE30099B8D00B40BD9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BD5198B230099B8D00B40BD9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				BD5198B330099B8D00B40BD9 /* StoreGaugeUITests */,
+			);
+			name = StoreGaugeUITests;
+			packageProductDependencies = (
+			);
+			productName = StoreGaugeUITests;
+			productReference = BD5198B030099B8D00B40BD9 /* StoreGaugeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		BD5198CD30099B8D00B40BD9 /* StoreGaugeWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD5198D130099B8D00B40BD9 /* Build configuration list for PBXNativeTarget "StoreGaugeWidgets" */;
+			buildPhases = (
+				BD5198CE30099B8D00B40BD9 /* Sources */,
+				BD5198CC30099B8D00B40BD9 /* Frameworks */,
+				BD5198CF30099B8D00B40BD9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				BD5198CA30099B8D00B40BD9 /* Shared */,
+				BD5198CB30099B8D00B40BD9 /* StoreGaugeWidgets */,
+			);
+			name = StoreGaugeWidgets;
+			packageProductDependencies = (
+			);
+			productName = StoreGaugeWidgets;
+			productReference = BD5198C730099B8D00B40BD9 /* StoreGaugeWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		E10000073030000000000007 /* StoreGaugeMobile */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E100000A303000000000000A /* Build configuration list for PBXNativeTarget "StoreGaugeMobile" */;
+			buildPhases = (
+				E10000053030000000000005 /* Sources */,
+				E10000043030000000000004 /* Frameworks */,
+				E10000063030000000000006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				BD5198CA30099B8D00B40BD9 /* Shared */,
+				E10000033030000000000003 /* StoreGaugeiOS */,
+				E100000B303000000000000B /* StoreGaugeShared */,
+			);
+			name = StoreGaugeMobile;
+			packageProductDependencies = (
+			);
+			productName = StoreGauge;
+			productReference = E10000013030000000000001 /* StoreGauge.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BD51988F30099B8C00B40BD9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2630;
+				LastUpgradeCheck = 2630;
+				TargetAttributes = {
+					A21000073020000000000007 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					BD51989630099B8C00B40BD9 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					BD5198A530099B8D00B40BD9 = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = BD51989630099B8C00B40BD9;
+					};
+					BD5198AF30099B8D00B40BD9 = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = BD51989630099B8C00B40BD9;
+					};
+					BD5198CD30099B8D00B40BD9 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					E10000073030000000000007 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+				};
+			};
+			buildConfigurationList = BD51989230099B8C00B40BD9 /* Build configuration list for PBXProject "StoreGauge" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BD51988E30099B8C00B40BD9;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A10000023010000000000002 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				A20000023020000000000002 /* XCRemoteSwiftPackageReference "swift-sdk" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = BD51989830099B8C00B40BD9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BD51989630099B8C00B40BD9 /* StoreGauge */,
+				E10000073030000000000007 /* StoreGaugeMobile */,
+				A21000073020000000000007 /* StoreGaugeMCP */,
+				BD5198CD30099B8D00B40BD9 /* StoreGaugeWidgets */,
+				BD5198A530099B8D00B40BD9 /* StoreGaugeTests */,
+				BD5198AF30099B8D00B40BD9 /* StoreGaugeUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A21000063020000000000006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD51989530099B8C00B40BD9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD5198A430099B8D00B40BD9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD5198AE30099B8D00B40BD9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD5198CF30099B8D00B40BD9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E10000063030000000000006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A21000043020000000000004 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD51989330099B8C00B40BD9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD5198A230099B8D00B40BD9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD5198AC30099B8D00B40BD9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD5198CE30099B8D00B40BD9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E10000053030000000000005 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A210000E302000000000000E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A21000073020000000000007 /* StoreGaugeMCP */;
+			targetProxy = A210000D302000000000000D /* PBXContainerItemProxy */;
+		};
+		BD5198A830099B8D00B40BD9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD51989630099B8C00B40BD9 /* StoreGauge */;
+			targetProxy = BD5198A730099B8D00B40BD9 /* PBXContainerItemProxy */;
+		};
+		BD5198B230099B8D00B40BD9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD51989630099B8C00B40BD9 /* StoreGauge */;
+			targetProxy = BD5198B130099B8D00B40BD9 /* PBXContainerItemProxy */;
+		};
+		BD5198D030099B8D00B40BD9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD5198CD30099B8D00B40BD9 /* StoreGaugeWidgets */;
+			targetProxy = BD5198C430099B8D00B40BD9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A21000083020000000000008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = StoreGaugeMCP/StoreGaugeMCP.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazun.storegauge.mcp;
+				PRODUCT_NAME = "storegauge-mcp";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		A21000093020000000000009 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = StoreGaugeMCP/StoreGaugeMCP.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazun.storegauge.mcp;
+				PRODUCT_NAME = "storegauge-mcp";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		BD5198B830099B8D00B40BD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BD5198B930099B8D00B40BD9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		BD5198BB30099B8D00B40BD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StoreGauge/StoreGauge.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readwrite;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StoreGauge/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = StoreGauge;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazun.storegauge;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = Debug;
+		};
+		BD5198BC30099B8D00B40BD9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StoreGauge/StoreGauge.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readwrite;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StoreGauge/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = StoreGauge;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazun.storegauge;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = Release;
+		};
+		BD5198BE30099B8D00B40BD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazun.storegauge.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StoreGauge.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StoreGauge";
+				XROS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = Debug;
+		};
+		BD5198BF30099B8D00B40BD9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazun.storegauge.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StoreGauge.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StoreGauge";
+				XROS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = Release;
+		};
+		BD5198C130099B8D00B40BD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazun.storegauge.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_TARGET_NAME = StoreGauge;
+				XROS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = Debug;
+		};
+		BD5198C230099B8D00B40BD9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazun.storegauge.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_TARGET_NAME = StoreGauge;
+				XROS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = Release;
+		};
+		BD5198D230099B8D00B40BD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = StoreGaugeWidgets/StoreGaugeWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				ENABLE_APP_SANDBOX = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StoreGaugeWidgets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazun.storegauge.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = Debug;
+		};
+		BD5198D330099B8D00B40BD9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = StoreGaugeWidgets/StoreGaugeWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				ENABLE_APP_SANDBOX = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StoreGaugeWidgets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazun.storegauge.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = Release;
+		};
+		E10000083030000000000008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StoreGaugeiOS/StoreGaugeMobile.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				ENABLE_PREVIEWS = YES;
+				EXCLUDED_RESOURCE_FILE_NAMES = "Info.plist StoreGauge.entitlements";
+				EXCLUDED_SOURCE_FILE_NAMES = (
+					Info.plist,
+					StoreGauge.entitlements,
+					StoreGaugeApp.swift,
+					AppDelegate.swift,
+					AppDetailView.swift,
+					Charts.swift,
+					Components.swift,
+					StoreGaugeMark.swift,
+					IncomeView.swift,
+					MenuBarView.swift,
+					MetadataHistoryView.swift,
+					OverviewView.swift,
+					ReviewsView.swift,
+					RootView.swift,
+					SettingsView.swift,
+					ShortcutsOverlay.swift,
+					SubscriptionsView.swift,
+					SyncHealthView.swift,
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = StoreGauge;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazun.storegauge;
+				PRODUCT_NAME = StoreGauge;
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E10000093030000000000009 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StoreGaugeiOS/StoreGaugeMobile.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				ENABLE_PREVIEWS = YES;
+				EXCLUDED_RESOURCE_FILE_NAMES = "Info.plist StoreGauge.entitlements";
+				EXCLUDED_SOURCE_FILE_NAMES = (
+					Info.plist,
+					StoreGauge.entitlements,
+					StoreGaugeApp.swift,
+					AppDelegate.swift,
+					AppDetailView.swift,
+					Charts.swift,
+					Components.swift,
+					StoreGaugeMark.swift,
+					IncomeView.swift,
+					MenuBarView.swift,
+					MetadataHistoryView.swift,
+					OverviewView.swift,
+					ReviewsView.swift,
+					RootView.swift,
+					SettingsView.swift,
+					ShortcutsOverlay.swift,
+					SubscriptionsView.swift,
+					SyncHealthView.swift,
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = StoreGauge;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazun.storegauge;
+				PRODUCT_NAME = StoreGauge;
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A210000A302000000000000A /* Build configuration list for PBXNativeTarget "StoreGaugeMCP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A21000083020000000000008 /* Debug */,
+				A21000093020000000000009 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD51989230099B8C00B40BD9 /* Build configuration list for PBXProject "StoreGauge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD5198B830099B8D00B40BD9 /* Debug */,
+				BD5198B930099B8D00B40BD9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD5198BA30099B8D00B40BD9 /* Build configuration list for PBXNativeTarget "StoreGauge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD5198BB30099B8D00B40BD9 /* Debug */,
+				BD5198BC30099B8D00B40BD9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD5198BD30099B8D00B40BD9 /* Build configuration list for PBXNativeTarget "StoreGaugeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD5198BE30099B8D00B40BD9 /* Debug */,
+				BD5198BF30099B8D00B40BD9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD5198C030099B8D00B40BD9 /* Build configuration list for PBXNativeTarget "StoreGaugeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD5198C130099B8D00B40BD9 /* Debug */,
+				BD5198C230099B8D00B40BD9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD5198D130099B8D00B40BD9 /* Build configuration list for PBXNativeTarget "StoreGaugeWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD5198D230099B8D00B40BD9 /* Debug */,
+				BD5198D330099B8D00B40BD9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E100000A303000000000000A /* Build configuration list for PBXNativeTarget "StoreGaugeMobile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E10000083030000000000008 /* Debug */,
+				E10000093030000000000009 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A10000023010000000000002 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.2;
+			};
+		};
+		A20000023020000000000002 /* XCRemoteSwiftPackageReference "swift-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/modelcontextprotocol/swift-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 0.11.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A10000033010000000000003 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000023010000000000002 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+		A20000033020000000000003 /* MCP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A20000023020000000000002 /* XCRemoteSwiftPackageReference "swift-sdk" */;
+			productName = MCP;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = BD51988F30099B8C00B40BD9 /* Project object */;
+}

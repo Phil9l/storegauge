@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+
+# Xcode
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+DerivedData/
+build/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Built app artifact (build from source)
+StoreTracker.app/
+StoreGauge.app/
+
+# Astro website
+docs/node_modules/
+docs/dist/
+docs/.astro/

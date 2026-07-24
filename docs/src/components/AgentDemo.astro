@@ -1,0 +1,101 @@
+---
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+---
+
+<div class="agent-demo" data-agent-demo>
+  <div class="agent-demo-tabs" role="tablist" aria-label="Local agent examples">
+    <button class="agent-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="claude-demo" id="claude-tab" data-agent-tab="claude">
+      <span class="agent-mark claude-mark"><img src={`${base}assets/claudecode-color.svg`} alt="" /></span>
+      Claude Code
+    </button>
+    <button class="agent-tab" type="button" role="tab" aria-selected="false" aria-controls="codex-demo" id="codex-tab" data-agent-tab="codex">
+      <span class="agent-mark codex-mark"><img src={`${base}assets/codex-color.svg`} alt="" /></span>
+      Codex
+    </button>
+    <button class="agent-tab" type="button" role="tab" aria-selected="false" aria-controls="opencode-demo" id="opencode-tab" data-agent-tab="opencode">
+      <span class="agent-mark opencode-mark"><img src={`${base}assets/opencode.svg`} alt="" /></span>
+      OpenCode
+    </button>
+    <span class="agent-local"><i></i> StoreGauge MCP · local</span>
+  </div>
+
+  <section class="agent-panel claude-panel is-active" role="tabpanel" id="claude-demo" aria-labelledby="claude-tab" data-agent-panel="claude">
+    <div class="claude-welcome">
+      <span class="claude-glyph"><img src={`${base}assets/claude-color.svg`} alt="" /></span>
+      <div><strong>Claude Code</strong><small>~/Developer/portfolio</small></div>
+    </div>
+    <div class="agent-prompt"><span>›</span><p>Which apps need my attention this morning?</p></div>
+    <div class="tool-call claude-tool">
+      <div class="tool-call-title"><span class="tool-status">●</span><strong>storegauge.portfolio_summary</strong><small>Read only</small></div>
+      <div class="tool-arguments"><span>days</span><code>30</code></div>
+      <div class="tool-result">
+        <span>Reviews needing reply</span><strong>6</strong>
+        <span>Largest movement</span><strong>Focus Garden · downloads +18%</strong>
+        <span>Release in progress</span><strong>Pocket Weather 3.4 · phased release</strong>
+      </div>
+    </div>
+    <p class="agent-answer">Focus Garden is growing fastest, six reviews still need replies, and Pocket Weather 3.4 is moving through a phased release.</p>
+  </section>
+
+  <section class="agent-panel codex-panel" role="tabpanel" id="codex-demo" aria-labelledby="codex-tab" data-agent-panel="codex" hidden>
+    <div class="codex-thread">
+      <div class="codex-user">Find the recent low-rated reviews that still need a reply.</div>
+      <div class="codex-response">
+        <span class="codex-avatar"><img src={`${base}assets/codex-color.svg`} alt="" /></span>
+        <div>
+          <div class="tool-call codex-tool">
+            <div class="tool-call-title"><span class="tool-status">✓</span><strong>Called StoreGauge</strong><small>list_reviews</small></div>
+            <div class="tool-arguments"><span>status</span><code>needsReply</code><span>maximum_rating</span><code>2</code></div>
+          </div>
+          <p>I found three recent reviews matching that filter. Two mention onboarding and one reports a subscription-screen issue.</p>
+          <div class="review-chips"><span>Focus Garden · ★★</span><span>Pocket Weather · ★</span><span>Focus Garden · ★★</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="agent-scope"><i></i> Returned from a bounded local snapshot. Review text follows your StoreGauge privacy settings.</p>
+  </section>
+
+  <section class="agent-panel opencode-panel" role="tabpanel" id="opencode-demo" aria-labelledby="opencode-tab" data-agent-panel="opencode" hidden>
+    <div class="opencode-bar">
+      <span class="opencode-logo"><img src={`${base}assets/opencode.svg`} alt="" /></span>
+      <strong>opencode</strong>
+      <small>~/Developer/portfolio</small>
+    </div>
+    <div class="opencode-prompt"><span>›</span><p>Is every production release healthy?</p></div>
+    <div class="opencode-call">
+      <div><span>◆</span><strong>storegauge_get_release_status</strong><small>completed</small></div>
+      <code>&#123;"platform":"all"&#125;</code>
+    </div>
+    <div class="opencode-output">
+      <p><span>Focus Garden</span><strong>Ready for Sale</strong></p>
+      <p><span>Pocket Weather 3.4</span><strong>Phased release · 20%</strong></p>
+      <p><span>Quiet Lists 2.1</span><strong>In review</strong></p>
+    </div>
+    <p class="opencode-answer">No production issues found. Pocket Weather is rolling out normally; Quiet Lists is still in review.</p>
+  </section>
+</div>
+
+<script>
+  document.querySelectorAll('[data-agent-demo]').forEach((demo) => {
+    const tabs = demo.querySelectorAll('[data-agent-tab]');
+    const panels = demo.querySelectorAll('[data-agent-panel]');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const selected = tab.getAttribute('data-agent-tab');
+        tabs.forEach((item) => {
+          const active = item === tab;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-selected', String(active));
+        });
+        panels.forEach((panel) => {
+          const active = panel.getAttribute('data-agent-panel') === selected;
+          panel.classList.toggle('is-active', active);
+          panel.toggleAttribute('hidden', !active);
+        });
+      });
+    });
+  });
+</script>

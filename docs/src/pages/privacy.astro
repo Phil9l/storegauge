@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Privacy — StoreGauge"
+  description="How StoreGauge stores credentials, product data, diagnostics, widget snapshots, and optional MCP data locally on your Mac."
+>
+  <div class="container privacy-page">
+    <header class="privacy-hero">
+      <p class="kicker">Privacy, plainly</p>
+      <h1>Your store data stays on your Mac.</h1>
+      <p>StoreGauge is local-first software. There is no StoreGauge account, backend, telemetry service, advertising SDK, or hosted customer database.</p>
+    </header>
+
+    <div class="policy-layout">
+      <nav class="policy-nav" aria-label="Privacy sections">
+        <strong>On this page</strong>
+        <a href="#credentials">Credentials</a>
+        <a href="#store-data">Store data</a>
+        <a href="#network">Network connections</a>
+        <a href="#translations">Translations</a>
+        <a href="#widgets">Widgets</a>
+        <a href="#mcp">MCP sharing</a>
+        <a href="#diagnostics">Diagnostics</a>
+        <a href="#deleting">Deleting data</a>
+      </nav>
+
+      <article class="policy-content">
+        <section id="credentials">
+          <h2>Credentials</h2>
+          <p>Apple <code>.p8</code> keys and complete Google service-account JSON keys are stored in macOS Keychain. StoreGauge reads them only to sign short-lived requests to the store provider you connected. Issuer IDs, key IDs, project IDs, vendor numbers, and report-bucket names are stored in the local application database.</p>
+        </section>
+        <section id="store-data">
+          <h2>Store data</h2>
+          <p>Apps, metrics, reviews, replies, releases, and metadata history are stored with SwiftData on your Mac. Raw Apple and Google report files are parsed locally and are not uploaded to StoreGauge or retained as a hosted copy.</p>
+        </section>
+        <section id="network">
+          <h2>Network connections</h2>
+          <p>StoreGauge connects directly to Apple App Store Connect, Google OAuth, Google Play, and Google Cloud Storage APIs. It may fetch public app icons from Apple or Google listings and currency rates from the public Frankfurter API. Direct-download builds contact this site’s signed Sparkle feed to check for updates.</p>
+        </section>
+        <section id="translations">
+          <h2>Translations</h2>
+          <p>Review translation uses Apple’s Translation framework. Translations are cached locally for the chosen target language. Language assets may be managed by macOS.</p>
+        </section>
+        <section id="widgets">
+          <h2>Widgets</h2>
+          <p>The widget extension receives a minimal read-only snapshot through StoreGauge’s App Group. It does not receive credentials or direct access to the product database.</p>
+        </section>
+        <section id="mcp">
+          <h2>Local agents and MCP</h2>
+          <p>MCP sharing is off by default. When enabled, StoreGauge writes a bounded, credential-free snapshot for the bundled read-only MCP helper. You control whether it includes review text, reviewer names, financial data, and apps not selected for the dashboard.</p>
+          <p>The helper cannot access Keychain, open the SwiftData database, call store APIs, or modify StoreGauge data. It serves local MCP clients over standard input and output.</p>
+        </section>
+        <section id="diagnostics">
+          <h2>Diagnostics</h2>
+          <p>The rolling local log records connector operation names, status codes, and errors. It excludes credentials, access tokens, response bodies, and review text. StoreGauge never uploads the log automatically.</p>
+        </section>
+        <section id="deleting">
+          <h2>Deleting data</h2>
+          <p>Deleting an account removes its locally stored app history and Keychain secret. Removing StoreGauge and its application data removes the remaining local database. Archived apps retain their history until restored or their account is deleted.</p>
+          <p>Questions or concerns can be reported in the <a href="https://github.com/Phil9l/storegauge/issues">public issue tracker</a>. The implementation is available for inspection in the <a href="https://github.com/Phil9l/storegauge">source repository</a>.</p>
+          <p class="policy-meta">Last updated: July 23, 2026</p>
+        </section>
+      </article>
+    </div>
+  </div>
+</BaseLayout>
