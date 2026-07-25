@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="#requirements"><img src="https://shieldcn.dev/badge/platform-macOS%2026.1%2B%20%7C%20iOS%2026.2%2B-0A84FF.svg?variant=secondary&amp;logo=apple&amp;theme=blue" alt="macOS 26.1 or later and iOS 26.2 or later" /></a>
+  <a href="#requirements"><img src="https://shieldcn.dev/badge/platform-macOS%2015%2B%20%7C%20iOS%2018%2B-0A84FF.svg?variant=secondary&amp;logo=apple&amp;theme=blue" alt="macOS 15 or later and iOS 18 or later" /></a>
   <a href="#privacy"><img src="https://shieldcn.dev/badge/privacy-local--first-22C55E.svg?variant=secondary&amp;logo=lock&amp;theme=green" alt="Local-first privacy" /></a>
   <a href="LICENSE"><img src="https://shieldcn.dev/badge/license-PolyForm%20Noncommercial%201.0.0-8B5CF6.svg?variant=secondary&amp;theme=violet" alt="PolyForm Noncommercial 1.0.0 license" /></a>
   <a href="https://github.com/Phil9l/storegauge/stargazers"><img src="https://shieldcn.dev/github/Phil9l/storegauge/stars.svg?variant=secondary&amp;theme=amber" alt="GitHub stars" /></a>
@@ -48,8 +48,8 @@ guaranteed hourly service.
 
 ## Requirements
 
-- macOS 26.1 or later
-- iOS 26.2 or later for the iPhone client
+- macOS 15 or later
+- iOS 18 or later for the iPhone client
 - Xcode 26.3 or later to build from source
 - For Apple: an App Store Connect account with permission to create a Team API key
 - For Google Play: a Google Cloud service account invited to Play Console
