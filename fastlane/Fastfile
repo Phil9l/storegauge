@@ -161,7 +161,6 @@ private_lane :build_iphone_app do |options|
       teamID: TEAM_ID
     },
     xcargs: auth_flags,
-    export_xcargs: auth_flags,
     output_directory: output_directory,
     output_name: "StoreGauge.ipa",
     build_path: File.join(OUTPUT_ROOT, "archives"),
@@ -184,7 +183,6 @@ private_lane :build_mac_app_store_app do |options|
       teamID: TEAM_ID
     },
     xcargs: auth_flags,
-    export_xcargs: auth_flags,
     output_directory: output_directory,
     output_name: "StoreGauge.pkg",
     build_path: File.join(OUTPUT_ROOT, "archives"),
