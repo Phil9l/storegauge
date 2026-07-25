@@ -275,6 +275,7 @@ platform :ios do
       skip_metadata: true,
       skip_screenshots: true,
       force: true,
+      run_precheck_before_submit: false,
       submit_for_review: enabled?("SUBMIT_FOR_REVIEW"),
       automatic_release: enabled?("AUTOMATIC_RELEASE")
     )
@@ -371,6 +372,7 @@ platform :mac do
       skip_metadata: true,
       skip_screenshots: true,
       force: true,
+      run_precheck_before_submit: false,
       submit_for_review: enabled?("SUBMIT_FOR_REVIEW"),
       automatic_release: enabled?("AUTOMATIC_RELEASE")
     )
