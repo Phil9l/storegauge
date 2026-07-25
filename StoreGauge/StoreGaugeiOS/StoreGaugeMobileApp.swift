@@ -11,6 +11,7 @@ import SwiftUI
 
 @main
 struct StoreGaugeMobileApp: App {
+    @Environment(\.scenePhase) private var scenePhase
     private let container: ModelContainer
     @State private var model: AppModel
 
@@ -53,8 +54,22 @@ struct StoreGaugeMobileApp: App {
                     seedDemoForUITestingIfRequested()
                     #endif
                     await model.bootstrap()
+                    MobileBackgroundRefresh.updateSchedule(
+                        enabled: model.settings.notificationsEnabled &&
+                            model.accounts().contains { !$0.isDemo }
+                    )
                 }
                 .onOpenURL { model.handleDeepLink($0) }
+                .onChange(of: scenePhase) { _, phase in
+                    guard phase == .background else { return }
+                    MobileBackgroundRefresh.updateSchedule(
+                        enabled: model.settings.notificationsEnabled &&
+                            model.accounts().contains { !$0.isDemo }
+                    )
+                }
+        }
+        .backgroundTask(.appRefresh(MobileBackgroundRefresh.identifier)) {
+            await MobileBackgroundRefresh.handle(model: model)
         }
     }
 

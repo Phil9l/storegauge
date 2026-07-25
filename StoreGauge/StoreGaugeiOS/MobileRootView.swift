@@ -23,9 +23,12 @@ struct MobileRootView: View {
 
     init() {
         #if DEBUG
-        let initial: MobileTab = ProcessInfo.processInfo.environment["STOREGAUGE_MOBILE_TAB"] == "reviews"
-            ? .reviews
-            : .overview
+        let initial: MobileTab = switch ProcessInfo.processInfo.environment["STOREGAUGE_MOBILE_TAB"] {
+        case "reviews": .reviews
+        case "apps": .apps
+        case "settings": .settings
+        default: .overview
+        }
         #else
         let initial: MobileTab = .overview
         #endif
@@ -1085,7 +1088,7 @@ struct MobileSettingsView: View {
                         Text($0).tag($0)
                     }
                 }
-                Picker("Refresh interval", selection: settingBinding(\.pollIntervalMinutes)) {
+                Picker("While app is open", selection: settingBinding(\.pollIntervalMinutes)) {
                     Text("15 minutes").tag(15)
                     Text("30 minutes").tag(30)
                     Text("1 hour").tag(60)
@@ -1104,14 +1107,31 @@ struct MobileSettingsView: View {
                             Task {
                                 let allowed = await model.notifier.requestAuthorization()
                                 model.settings.notificationsEnabled = allowed
+                                MobileBackgroundRefresh.updateSchedule(
+                                    enabled: allowed && accounts.contains { !$0.isDemo }
+                                )
                             }
                         } else {
                             model.settings.notificationsEnabled = false
+                            MobileBackgroundRefresh.cancel()
                         }
                     }
                 ))
                 LabeledContent("System permission", value: model.notifier.authorizationLabel)
                     .foregroundStyle(.secondary)
+                LabeledContent(
+                    "Background App Refresh",
+                    value: MobileBackgroundRefresh.availabilityLabel
+                )
+                .foregroundStyle(.secondary)
+
+                if let lastCheck = MobileBackgroundRefresh.lastCompletedAt {
+                    LabeledContent(
+                        "Last background check",
+                        value: lastCheck.formatted(date: .abbreviated, time: .shortened)
+                    )
+                    .foregroundStyle(.secondary)
+                }
 
                 Toggle("Performance alerts", isOn: settingBinding(\.anomalyAlertsEnabled))
                     .disabled(!model.settings.notificationsEnabled)
@@ -1131,7 +1151,7 @@ struct MobileSettingsView: View {
             .listSectionSpacing(.compact)
 
             Section {
-                Text("Alerts are created when StoreGauge refreshes. Because this client has no server, iOS may pause automatic refresh while the app is closed.")
+                Text("StoreGauge asks iOS to check reviews and release status no earlier than hourly. iOS chooses the actual time, and may delay checks when the app is rarely used, Background App Refresh is off, or Low Power Mode is enabled.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -1143,6 +1163,11 @@ struct MobileSettingsView: View {
                 )
                 .font(.callout)
                 .foregroundStyle(.secondary)
+                Link(
+                    destination: URL(string: "https://phil9l.github.io/storegauge/privacy/")!
+                ) {
+                    Label("Privacy Policy", systemImage: "hand.raised.fill")
+                }
             }
 
             if let error = model.lastSyncError {

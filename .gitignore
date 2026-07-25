@@ -12,6 +12,19 @@ build/
 *.ipa
 *.dSYM.zip
 *.dSYM
+*.profraw
+
+# Fastlane credentials and local state
+fastlane/.env
+fastlane/.env.*
+!fastlane/.env.example
+!fastlane/.env.default
+fastlane/*.p8
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+AuthKey_*.p8
+*.p8
 
 # Swift Package Manager
 .build/

@@ -27,3 +27,8 @@ It is deliberately independent rather than a synced companion: credentials stay
 in the iPhone Keychain and downloaded data stays in that device’s SwiftData
 store. Cross-device sync may be evaluated later only if it can preserve that
 local-first privacy model.
+
+The client uses iOS background app refresh for best-effort hourly review and
+release-status alerts. Guaranteed immediate delivery would require a hosted
+polling and push-notification service, which is intentionally outside the
+current local-only design.

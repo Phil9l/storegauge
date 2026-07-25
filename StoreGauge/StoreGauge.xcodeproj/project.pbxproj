@@ -11,6 +11,8 @@
 		A20000013020000000000001 /* MCP in Frameworks */ = {isa = PBXBuildFile; productRef = A20000033020000000000003 /* MCP */; };
 		A210000B302000000000000B /* storegauge-mcp in Embed MCP Server */ = {isa = PBXBuildFile; fileRef = A21000013020000000000001 /* storegauge-mcp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		BD5198C530099B8D00B40BD9 /* StoreGaugeWidgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BD5198C730099B8D00B40BD9 /* StoreGaugeWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F100000C304000000000000C /* StoreGaugeWidgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BD5198C730099B8D00B40BD9 /* StoreGaugeWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F100000D304000000000000D /* storegauge-mcp in Embed MCP Server */ = {isa = PBXBuildFile; fileRef = A21000013020000000000001 /* storegauge-mcp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +44,20 @@
 			remoteGlobalIDString = BD5198CD30099B8D00B40BD9;
 			remoteInfo = StoreGaugeWidgets;
 		};
+		F100000E304000000000000E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD51988F30099B8C00B40BD9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD5198CD30099B8D00B40BD9;
+			remoteInfo = StoreGaugeWidgets;
+		};
+		F100000F304000000000000F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD51988F30099B8C00B40BD9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A21000073020000000000007;
+			remoteInfo = StoreGaugeMCP;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -67,6 +83,28 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F10000063040000000000006 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F100000C304000000000000C /* StoreGaugeWidgets.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F10000073040000000000007 /* Embed MCP Server */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				F100000D304000000000000D /* storegauge-mcp in Embed MCP Server */,
+			);
+			name = "Embed MCP Server";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -76,12 +114,14 @@
 		BD5198B030099B8D00B40BD9 /* StoreGaugeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StoreGaugeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD5198C730099B8D00B40BD9 /* StoreGaugeWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StoreGaugeWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E10000013030000000000001 /* StoreGauge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreGauge.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F10000013040000000000001 /* StoreGauge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreGauge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		BD5198C330099B8D00B40BD9 /* Exceptions for "StoreGauge" folder in "StoreGauge" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Info-AppStore.plist,
 				Info.plist,
 			);
 			target = BD51989630099B8C00B40BD9 /* StoreGauge */;
@@ -92,6 +132,31 @@
 				Info.plist,
 			);
 			target = BD5198CD30099B8D00B40BD9 /* StoreGaugeWidgets */;
+		};
+		E10000103030000000000010 /* Exceptions for "StoreGaugeiOS" folder in "StoreGaugeMobile" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = E10000073030000000000007 /* StoreGaugeMobile */;
+		};
+		E10000113030000000000011 /* Exceptions for "StoreGauge" folder in "StoreGaugeMobile" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info-AppStore.plist,
+				Info.plist,
+				StoreGauge.entitlements,
+				StoreGaugeAppStore.entitlements,
+			);
+			target = E10000073030000000000007 /* StoreGaugeMobile */;
+		};
+		F10000023040000000000002 /* Exceptions for "StoreGauge" folder in "StoreGaugeAppStore" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info-AppStore.plist,
+				Info.plist,
+			);
+			target = F10000083040000000000008 /* StoreGaugeAppStore */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -105,6 +170,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				BD5198C330099B8D00B40BD9 /* Exceptions for "StoreGauge" folder in "StoreGauge" target */,
+				F10000023040000000000002 /* Exceptions for "StoreGauge" folder in "StoreGaugeAppStore" target */,
 			);
 			path = StoreGauge;
 			sourceTree = "<group>";
@@ -134,11 +200,17 @@
 		};
 		E10000033030000000000003 /* StoreGaugeiOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E10000103030000000000010 /* Exceptions for "StoreGaugeiOS" folder in "StoreGaugeMobile" target */,
+			);
 			path = StoreGaugeiOS;
 			sourceTree = "<group>";
 		};
 		E100000B303000000000000B /* StoreGaugeShared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E10000113030000000000011 /* Exceptions for "StoreGauge" folder in "StoreGaugeMobile" target */,
+			);
 			name = StoreGaugeShared;
 			path = StoreGauge;
 			sourceTree = "<group>";
@@ -190,6 +262,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F10000043040000000000004 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -217,6 +296,7 @@
 				BD5198C730099B8D00B40BD9 /* StoreGaugeWidgets.appex */,
 				BD5198A630099B8D00B40BD9 /* StoreGaugeTests.xctest */,
 				BD5198B030099B8D00B40BD9 /* StoreGaugeUITests.xctest */,
+				F10000013040000000000001 /* StoreGauge.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -282,6 +362,33 @@
 			);
 			productName = StoreGauge;
 			productReference = BD51989730099B8C00B40BD9 /* StoreGauge.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F10000083040000000000008 /* StoreGaugeAppStore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F10000093040000000000009 /* Build configuration list for PBXNativeTarget "StoreGaugeAppStore" */;
+			buildPhases = (
+				F10000033040000000000003 /* Sources */,
+				F10000043040000000000004 /* Frameworks */,
+				F10000053040000000000005 /* Resources */,
+				F10000063040000000000006 /* Embed App Extensions */,
+				F10000073040000000000007 /* Embed MCP Server */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F10000103040000000000010 /* PBXTargetDependency */,
+				F10000113040000000000011 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				BD51989930099B8C00B40BD9 /* StoreGauge */,
+				BD5198CA30099B8D00B40BD9 /* Shared */,
+			);
+			name = StoreGaugeAppStore;
+			packageProductDependencies = (
+			);
+			productName = StoreGauge;
+			productReference = F10000013040000000000001 /* StoreGauge.app */;
 			productType = "com.apple.product-type.application";
 		};
 		BD5198A530099B8D00B40BD9 /* StoreGaugeTests */ = {
@@ -407,6 +514,9 @@
 					E10000073030000000000007 = {
 						CreatedOnToolsVersion = 26.3;
 					};
+					F10000083040000000000008 = {
+						CreatedOnToolsVersion = 26.3;
+					};
 				};
 			};
 			buildConfigurationList = BD51989230099B8C00B40BD9 /* Build configuration list for PBXProject "StoreGauge" */;
@@ -428,6 +538,7 @@
 			projectRoot = "";
 			targets = (
 				BD51989630099B8C00B40BD9 /* StoreGauge */,
+				F10000083040000000000008 /* StoreGaugeAppStore */,
 				E10000073030000000000007 /* StoreGaugeMobile */,
 				A21000073020000000000007 /* StoreGaugeMCP */,
 				BD5198CD30099B8D00B40BD9 /* StoreGaugeWidgets */,
@@ -480,6 +591,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F10000053040000000000005 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -525,6 +643,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F10000033040000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -547,6 +672,16 @@
 			isa = PBXTargetDependency;
 			target = BD5198CD30099B8D00B40BD9 /* StoreGaugeWidgets */;
 			targetProxy = BD5198C430099B8D00B40BD9 /* PBXContainerItemProxy */;
+		};
+		F10000103040000000000010 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD5198CD30099B8D00B40BD9 /* StoreGaugeWidgets */;
+			targetProxy = F100000E304000000000000E /* PBXContainerItemProxy */;
+		};
+		F10000113040000000000011 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A21000073020000000000007 /* StoreGaugeMCP */;
+			targetProxy = F100000F304000000000000F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -808,6 +943,79 @@
 			};
 			name = Release;
 		};
+		F100000A304000000000000A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StoreGauge/StoreGaugeAppStore.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StoreGauge/Info-AppStore.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = StoreGauge;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazun.storegauge;
+				PRODUCT_NAME = StoreGauge;
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG STOREGAUGE_APP_STORE $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F100000B304000000000000B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StoreGauge/StoreGaugeAppStore.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 75RZ97C25R;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StoreGauge/Info-AppStore.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = StoreGauge;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bazun.storegauge;
+				PRODUCT_NAME = StoreGauge;
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "STOREGAUGE_APP_STORE $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		BD5198BE30099B8D00B40BD9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -992,7 +1200,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 75RZ97C25R;
 				ENABLE_PREVIEWS = YES;
-				EXCLUDED_RESOURCE_FILE_NAMES = "Info.plist StoreGauge.entitlements";
+				EXCLUDED_RESOURCE_FILE_NAMES = "Info.plist Info-AppStore.plist StoreGauge.entitlements StoreGaugeAppStore.entitlements";
 				EXCLUDED_SOURCE_FILE_NAMES = (
 					Info.plist,
 					StoreGauge.entitlements,
@@ -1014,6 +1222,7 @@
 					SyncHealthView.swift,
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StoreGaugeiOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = StoreGauge;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1054,7 +1263,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 75RZ97C25R;
 				ENABLE_PREVIEWS = YES;
-				EXCLUDED_RESOURCE_FILE_NAMES = "Info.plist StoreGauge.entitlements";
+				EXCLUDED_RESOURCE_FILE_NAMES = "Info.plist Info-AppStore.plist StoreGauge.entitlements StoreGaugeAppStore.entitlements";
 				EXCLUDED_SOURCE_FILE_NAMES = (
 					Info.plist,
 					StoreGauge.entitlements,
@@ -1076,6 +1285,7 @@
 					SyncHealthView.swift,
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StoreGaugeiOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = StoreGauge;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1131,6 +1341,15 @@
 			buildConfigurations = (
 				BD5198BB30099B8D00B40BD9 /* Debug */,
 				BD5198BC30099B8D00B40BD9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F10000093040000000000009 /* Build configuration list for PBXNativeTarget "StoreGaugeAppStore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F100000A304000000000000A /* Debug */,
+				F100000B304000000000000B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

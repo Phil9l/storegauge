@@ -13,7 +13,7 @@ StoreGauge uses a Team API key to read App Store Connect and sign short-lived re
 4. Download the `.p8` private key. Apple allows it to be downloaded only once.
 5. In StoreGauge, choose **Add Account → App Store Connect**, enter the values, and choose **Test & Add**.
 
-Use a role that covers the features you need. Review replies require write access. The Admin role enables all StoreGauge features, including the report access that individual keys cannot provide.
+Create a dedicated StoreGauge key and choose the lowest role that covers the features you need. Review replies require write access. Use the Admin role only if you want every StoreGauge feature; it has broad access. Individual keys cannot download Sales or Finance reports.
 
 ## Add sales and subscription reporting
 
@@ -22,11 +22,12 @@ Open [Payments and Financial Reports](https://appstoreconnect.apple.com/itc/paym
 | Credential | Stored in | Purpose |
 | --- | --- | --- |
 | Issuer ID and Key ID | Local SwiftData store | Identify the API key |
-| `.p8` private key | macOS Keychain | Sign short-lived requests |
+| `.p8` private key | Device Keychain | Sign short-lived requests |
 | Vendor Number | Local SwiftData store | Download sales and subscription reports |
 
 :::caution
 Keep a secure backup of the `.p8` file. Apple does not allow the same private key to be downloaded again.
+StoreGauge marks the imported Keychain item as device-only, so it does not migrate to another device through a backup.
 :::
 
 ## What StoreGauge imports

@@ -328,7 +328,7 @@ struct AccountFormView: View {
                     }
                     .font(.caption).padding(.leading, 30)
                     AccountSetupStep(number: 2, title: "Generate a Team key",
-                                     detail: "Name it StoreGauge and choose Admin for access to every StoreGauge feature. Individual API keys can’t download Sales or Finance reports.")
+                                     detail: "Create a dedicated key and choose the lowest role that covers the features you need. Use Admin only if you want access to every feature. Individual API keys can’t download Sales or Finance reports.")
                     AccountSetupStep(number: 3, title: "Copy the IDs and download the key",
                                      detail: "Copy the Issuer ID and Key ID, then download AuthKey_XXXXXXXXXX.p8. Apple lets you download it only once.")
                 }
@@ -1294,6 +1294,7 @@ struct AboutView: View {
     private let repositoryURL = URL(string: "https://github.com/Phil9l/storegauge")!
     private let newIssueURL = URL(string: "https://github.com/Phil9l/storegauge/issues/new")!
     private let pullRequestsURL = URL(string: "https://github.com/Phil9l/storegauge/pulls")!
+    private let privacyURL = URL(string: "https://phil9l.github.io/storegauge/privacy/")!
 
     private var version: String {
         let v = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
@@ -1330,6 +1331,9 @@ struct AboutView: View {
                 }
                 Link(destination: pullRequestsURL) {
                     Label("Pull Requests", systemImage: "arrow.triangle.branch")
+                }
+                Link(destination: privacyURL) {
+                    Label("Privacy", systemImage: "hand.raised.fill")
                 }
             }
             .buttonStyle(.bordered)

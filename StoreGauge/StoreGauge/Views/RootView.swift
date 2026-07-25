@@ -26,6 +26,18 @@ struct RootView: View {
     @State private var keyMonitor = KeyboardMonitor()
     @State private var showingAddAccount = false
 
+    init() {
+        #if DEBUG
+        let initial: SidebarItem? = switch ProcessInfo.processInfo.environment["STOREGAUGE_DESKTOP_TAB"] {
+        case "reviews": .reviews
+        case "income": .income
+        case "subscriptions": .subscriptions
+        default: .overview
+        }
+        _selection = State(initialValue: initial)
+        #endif
+    }
+
     var body: some View {
         Group {
             if accounts.isEmpty {

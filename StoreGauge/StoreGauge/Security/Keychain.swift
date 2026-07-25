@@ -12,6 +12,7 @@ import Security
 
 enum Keychain {
     static let service = "com.bazun.storegauge.asc-private-key"
+    private static let accessibility = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
 
     enum KeychainError: LocalizedError {
         case status(OSStatus)
@@ -41,7 +42,9 @@ enum Keychain {
         ]
         let attributes: [String: Any] = [
             kSecValueData as String: data,
-            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock,
+            // Background refresh needs access after the first unlock, but store
+            // credentials must not migrate to another device through a backup.
+            kSecAttrAccessible as String: accessibility,
         ]
 
         let updateStatus = SecItemUpdate(match as CFDictionary, attributes as CFDictionary)
@@ -82,6 +85,16 @@ enum Keychain {
         else {
             throw KeychainError.invalidData
         }
+        // Best-effort migration for credentials saved by builds that used the
+        // migratable AfterFirstUnlock accessibility class.
+        _ = SecItemUpdate(
+            [
+                kSecClass as String: kSecClassGenericPassword,
+                kSecAttrService as String: service,
+                kSecAttrAccount as String: account,
+            ] as CFDictionary,
+            [kSecAttrAccessible as String: accessibility] as CFDictionary
+        )
         return value
     }
 

@@ -1,0 +1,380 @@
+require "shellwords"
+require "xcodeproj"
+require "dotenv"
+
+shared_asc_env = File.expand_path("~/.appstoreconnect/.env")
+Dotenv.load(shared_asc_env) if File.file?(shared_asc_env)
+
+ENV["FASTLANE_OPT_OUT_USAGE"] ||= "1"
+ENV["FASTLANE_SKIP_UPDATE_CHECK"] ||= "1"
+
+default_platform(:ios)
+skip_docs
+
+ROOT = File.expand_path("..", __dir__)
+PROJECT = File.join(ROOT, "StoreGauge", "StoreGauge.xcodeproj")
+IOS_SCHEME = "StoreGaugeMobile"
+MAC_SCHEME = "StoreGauge"
+MAC_APP_STORE_SCHEME = "StoreGaugeAppStore"
+TEST_SCHEME = "StoreGaugeTests"
+APP_IDENTIFIER = ENV["STOREGAUGE_APP_IDENTIFIER"] || "com.bazun.storegauge"
+TEAM_ID = ENV["STOREGAUGE_TEAM_ID"] || "75RZ97C25R"
+OUTPUT_ROOT = File.join(ROOT, "build", "fastlane")
+
+def enabled?(name)
+  %w[1 true yes].include?((ENV[name] || "").downcase)
+end
+
+def asc_credential(fastlane_name, shared_name)
+  [ENV[fastlane_name], ENV[shared_name]].find { |value| !value.to_s.strip.empty? }
+end
+
+def asc_xcode_auth_flags
+  key_path = File.expand_path(
+    asc_credential("FASTLANE_ASC_KEY_PATH", "APP_STORE_CONNECT_API_KEY_KEY_FILEPATH")
+  )
+  [
+    "-allowProvisioningUpdates",
+    "-authenticationKeyPath #{Shellwords.escape(key_path)}",
+    "-authenticationKeyID #{Shellwords.escape(asc_credential("FASTLANE_ASC_KEY_ID", "APP_STORE_CONNECT_API_KEY_KEY_ID"))}",
+    "-authenticationKeyIssuerID #{Shellwords.escape(asc_credential("FASTLANE_ASC_ISSUER_ID", "APP_STORE_CONNECT_API_KEY_ISSUER_ID"))}"
+  ].join(" ")
+end
+
+before_all do
+  ENV["LANG"] ||= "en_US.UTF-8"
+  ENV["LC_ALL"] ||= "en_US.UTF-8"
+end
+
+private_lane :load_asc_api_key do
+  key_id = asc_credential("FASTLANE_ASC_KEY_ID", "APP_STORE_CONNECT_API_KEY_KEY_ID")
+  issuer_id = asc_credential("FASTLANE_ASC_ISSUER_ID", "APP_STORE_CONNECT_API_KEY_ISSUER_ID")
+  key_file = asc_credential("FASTLANE_ASC_KEY_PATH", "APP_STORE_CONNECT_API_KEY_KEY_FILEPATH")
+  missing = {
+    "key ID" => key_id,
+    "issuer ID" => issuer_id,
+    "private-key path" => key_file
+  }.select { |_, value| value.to_s.strip.empty? }.keys
+  UI.user_error!("Missing environment variables: #{missing.join(", ")}") unless missing.empty?
+
+  key_path = File.expand_path(key_file)
+  UI.user_error!("App Store Connect private key not found: #{key_path}") unless File.file?(key_path)
+
+  app_store_connect_api_key(
+    key_id: key_id,
+    issuer_id: issuer_id,
+    key_filepath: key_path,
+    duration: 1200,
+    in_house: false
+  )
+end
+
+private_lane :apply_explicit_release_numbers do |options|
+  version = options[:version] || ENV["VERSION"]
+  build_number = options[:build_number] || ENV["BUILD_NUMBER"]
+
+  increment_version_number(
+    version_number: version,
+    xcodeproj: PROJECT
+  ) unless version.to_s.empty?
+
+  increment_build_number(
+    build_number: build_number,
+    xcodeproj: PROJECT
+  ) unless build_number.to_s.empty?
+end
+
+private_lane :set_next_store_build_number do |options|
+  api_key = options.fetch(:api_key)
+  target = options.fetch(:target)
+  platform = options.fetch(:platform)
+  version = options[:version] || ENV["VERSION"]
+  version ||= get_version_number(xcodeproj: PROJECT, target: target)
+
+  explicit_build = options[:build_number] || ENV["BUILD_NUMBER"]
+  unless explicit_build.to_s.empty?
+    increment_build_number(build_number: explicit_build, xcodeproj: PROJECT)
+    next
+  end
+
+  current = get_build_number(xcodeproj: PROJECT).to_i
+  remote = latest_testflight_build_number(
+    api_key: api_key,
+    app_identifier: APP_IDENTIFIER,
+    version: version,
+    platform: platform,
+    initial_build_number: current
+  ).to_i
+  increment_build_number(
+    build_number: [current + 1, remote + 1].max,
+    xcodeproj: PROJECT
+  )
+end
+
+def verify_sparkle_bundle(app_path)
+  info_path = File.join(app_path, "Contents", "Info.plist")
+  framework_path = File.join(app_path, "Contents", "Frameworks", "Sparkle.framework")
+  binary_path = File.join(app_path, "Contents", "MacOS", "StoreGauge")
+  info = Xcodeproj::Plist.read_from_path(info_path)
+
+  UI.user_error!("Direct-download build is missing Sparkle.framework") unless File.directory?(framework_path)
+  UI.user_error!("Direct-download build is missing SUFeedURL") if info["SUFeedURL"].to_s.empty?
+  UI.user_error!("Direct-download build is missing SUPublicEDKey") if info["SUPublicEDKey"].to_s.empty?
+  UI.user_error!("Direct-download build is missing its update command") unless File.binread(binary_path).include?("Check for Updates")
+end
+
+def verify_app_store_bundle(app_path)
+  info_path = File.join(app_path, "Contents", "Info.plist")
+  framework_path = File.join(app_path, "Contents", "Frameworks", "Sparkle.framework")
+  binary_path = File.join(app_path, "Contents", "MacOS", "StoreGauge")
+  entitlements_path = File.join(ROOT, "StoreGauge", "StoreGauge", "StoreGaugeAppStore.entitlements")
+  info = Xcodeproj::Plist.read_from_path(info_path)
+  entitlements = Xcodeproj::Plist.read_from_path(entitlements_path)
+  sparkle_exceptions = entitlements.keys.grep(/mach-lookup|temporary-exception/)
+
+  UI.user_error!("App Store build unexpectedly embeds Sparkle.framework") if File.exist?(framework_path)
+  UI.user_error!("App Store build unexpectedly contains SUFeedURL") if info.key?("SUFeedURL")
+  UI.user_error!("App Store build unexpectedly contains SUPublicEDKey") if info.key?("SUPublicEDKey")
+  UI.user_error!("App Store build unexpectedly contains the update command") if File.binread(binary_path).include?("Check for Updates")
+  UI.user_error!("App Store entitlements contain Sparkle exceptions: #{sparkle_exceptions.join(", ")}") unless sparkle_exceptions.empty?
+end
+
+def verify_iphone_bundle(app_path)
+  desktop_only_files = %w[Info-AppStore.plist StoreGaugeAppStore.entitlements]
+  unexpected = desktop_only_files.select { |name| File.exist?(File.join(app_path, name)) }
+  UI.user_error!("iPhone bundle contains desktop-only files: #{unexpected.join(", ")}") unless unexpected.empty?
+end
+
+private_lane :build_iphone_app do |options|
+  output_directory = File.join(OUTPUT_ROOT, "ios")
+  auth_flags = options[:use_api_key] ? asc_xcode_auth_flags : "-allowProvisioningUpdates"
+
+  build_app(
+    project: PROJECT,
+    scheme: IOS_SCHEME,
+    configuration: "Release",
+    clean: true,
+    destination: "generic/platform=iOS",
+    export_method: "app-store",
+    export_options: {
+      signingStyle: "automatic",
+      teamID: TEAM_ID
+    },
+    xcargs: auth_flags,
+    export_xcargs: auth_flags,
+    output_directory: output_directory,
+    output_name: "StoreGauge.ipa",
+    build_path: File.join(OUTPUT_ROOT, "archives"),
+    derived_data_path: File.join(OUTPUT_ROOT, "derived-data", "ios")
+  )
+end
+
+private_lane :build_mac_app_store_app do |options|
+  output_directory = File.join(OUTPUT_ROOT, "mac-app-store")
+  auth_flags = options[:use_api_key] ? asc_xcode_auth_flags : "-allowProvisioningUpdates"
+
+  build_mac_app(
+    project: PROJECT,
+    scheme: MAC_APP_STORE_SCHEME,
+    configuration: "Release",
+    clean: true,
+    export_method: "app-store",
+    export_options: {
+      signingStyle: "automatic",
+      teamID: TEAM_ID
+    },
+    xcargs: auth_flags,
+    export_xcargs: auth_flags,
+    output_directory: output_directory,
+    output_name: "StoreGauge.pkg",
+    build_path: File.join(OUTPUT_ROOT, "archives"),
+    derived_data_path: File.join(OUTPUT_ROOT, "derived-data", "mac-app-store")
+  )
+end
+
+platform :ios do
+  desc "Run shared tests and compile the iPhone client without signing"
+  lane :verify do
+    packages_path = File.join(OUTPUT_ROOT, "packages")
+    tests_derived_data = File.join(OUTPUT_ROOT, "derived-data", "tests")
+    ios_derived_data = File.join(OUTPUT_ROOT, "derived-data", "ios-verify")
+
+    sh(
+      "xcodebuild",
+      "-project", PROJECT,
+      "-scheme", TEST_SCHEME,
+      "-configuration", "Debug",
+      "-destination", "platform=macOS",
+      "-derivedDataPath", tests_derived_data,
+      "-clonedSourcePackagesDirPath", packages_path,
+      "test"
+    )
+    sh(
+      "xcodebuild",
+      "-project", PROJECT,
+      "-scheme", IOS_SCHEME,
+      "-configuration", "Release",
+      "-destination", "generic/platform=iOS Simulator",
+      "-derivedDataPath", ios_derived_data,
+      "-clonedSourcePackagesDirPath", packages_path,
+      "CODE_SIGNING_ALLOWED=NO",
+      "clean",
+      "build"
+    )
+    verify_iphone_bundle(
+      File.join(ios_derived_data, "Build", "Products", "Release-iphonesimulator", "StoreGauge.app")
+    )
+  end
+
+  desc "Create a signed App Store IPA without uploading it"
+  lane :build do |options|
+    apply_explicit_release_numbers(options)
+    build_iphone_app(use_api_key: false)
+  end
+
+  desc "Increment the build, create an IPA, and upload it to TestFlight"
+  lane :beta do |options|
+    ensure_git_status_clean
+    api_key = load_asc_api_key
+    version = options[:version] || ENV["VERSION"]
+    increment_version_number(version_number: version, xcodeproj: PROJECT) unless version.to_s.empty?
+    set_next_store_build_number(
+      api_key: api_key,
+      target: IOS_SCHEME,
+      platform: "ios",
+      version: version,
+      build_number: options[:build_number]
+    )
+    ipa = build_iphone_app(use_api_key: true)
+    upload_to_testflight(
+      api_key: api_key,
+      ipa: ipa,
+      app_identifier: APP_IDENTIFIER,
+      skip_waiting_for_build_processing: true,
+      changelog: ENV["CHANGELOG"]
+    )
+  end
+
+  desc "Build and upload an iPhone binary to its App Store version"
+  lane :release do |options|
+    ensure_git_status_clean
+    api_key = load_asc_api_key
+    version = options[:version] || ENV["VERSION"]
+    increment_version_number(version_number: version, xcodeproj: PROJECT) unless version.to_s.empty?
+    set_next_store_build_number(
+      api_key: api_key,
+      target: IOS_SCHEME,
+      platform: "ios",
+      version: version,
+      build_number: options[:build_number]
+    )
+    ipa = build_iphone_app(use_api_key: true)
+    upload_to_app_store(
+      api_key: api_key,
+      ipa: ipa,
+      app_identifier: APP_IDENTIFIER,
+      platform: "ios",
+      skip_metadata: true,
+      skip_screenshots: true,
+      force: true,
+      submit_for_review: enabled?("SUBMIT_FOR_REVIEW"),
+      automatic_release: enabled?("AUTOMATIC_RELEASE")
+    )
+  end
+end
+
+platform :mac do
+  desc "Run shared tests and verify both direct-download and App Store desktop builds"
+  lane :verify do
+    packages_path = File.join(OUTPUT_ROOT, "packages")
+    tests_derived_data = File.join(OUTPUT_ROOT, "derived-data", "tests")
+    direct_derived_data = File.join(OUTPUT_ROOT, "derived-data", "mac-direct-verify")
+    app_store_derived_data = File.join(OUTPUT_ROOT, "derived-data", "mac-app-store-verify")
+
+    sh(
+      "xcodebuild",
+      "-project", PROJECT,
+      "-scheme", TEST_SCHEME,
+      "-configuration", "Debug",
+      "-destination", "platform=macOS",
+      "-derivedDataPath", tests_derived_data,
+      "-clonedSourcePackagesDirPath", packages_path,
+      "test"
+    )
+    sh(
+      "xcodebuild",
+      "-project", PROJECT,
+      "-scheme", MAC_SCHEME,
+      "-configuration", "Release",
+      "-destination", "generic/platform=macOS",
+      "-derivedDataPath", direct_derived_data,
+      "-clonedSourcePackagesDirPath", packages_path,
+      "CODE_SIGNING_ALLOWED=NO",
+      "build"
+    )
+    verify_sparkle_bundle(
+      File.join(direct_derived_data, "Build", "Products", "Release", "StoreGauge.app")
+    )
+    sh(
+      "xcodebuild",
+      "-project", PROJECT,
+      "-scheme", MAC_APP_STORE_SCHEME,
+      "-configuration", "Release",
+      "-destination", "generic/platform=macOS",
+      "-derivedDataPath", app_store_derived_data,
+      "-clonedSourcePackagesDirPath", packages_path,
+      "CODE_SIGNING_ALLOWED=NO",
+      "build"
+    )
+    verify_app_store_bundle(
+      File.join(app_store_derived_data, "Build", "Products", "Release", "StoreGauge.app")
+    )
+  end
+
+  desc "Check Developer ID, notarization, Sparkle, entitlements, and release inputs"
+  lane :preflight do
+    sh(File.join(ROOT, "scripts", "release-preflight.sh"))
+  end
+
+  desc "Build, sign, notarize, staple, and export the direct-download Mac DMG"
+  lane :direct do |options|
+    args = [File.join(ROOT, "scripts", "build-release.sh")]
+    version = options[:version] || ENV["VERSION"]
+    args += ["--version", version] unless version.to_s.empty?
+    args += ["--notary-profile", ENV["STOREGAUGE_NOTARY_PROFILE"]] unless ENV["STOREGAUGE_NOTARY_PROFILE"].to_s.empty?
+    sh(*args)
+  end
+
+  desc "Create a signed Mac App Store package without uploading it"
+  lane :app_store_build do |options|
+    apply_explicit_release_numbers(options)
+    build_mac_app_store_app(use_api_key: false)
+  end
+
+  desc "Build and upload the Sparkle-free desktop package to its Mac App Store version"
+  lane :app_store do |options|
+    ensure_git_status_clean
+    api_key = load_asc_api_key
+    version = options[:version] || ENV["VERSION"]
+    increment_version_number(version_number: version, xcodeproj: PROJECT) unless version.to_s.empty?
+    set_next_store_build_number(
+      api_key: api_key,
+      target: MAC_APP_STORE_SCHEME,
+      platform: "osx",
+      version: version,
+      build_number: options[:build_number]
+    )
+    pkg = build_mac_app_store_app(use_api_key: true)
+    upload_to_app_store(
+      api_key: api_key,
+      pkg: pkg,
+      app_identifier: APP_IDENTIFIER,
+      platform: "osx",
+      skip_metadata: true,
+      skip_screenshots: true,
+      force: true,
+      submit_for_review: enabled?("SUBMIT_FOR_REVIEW"),
+      automatic_release: enabled?("AUTOMATIC_RELEASE")
+    )
+  end
+end

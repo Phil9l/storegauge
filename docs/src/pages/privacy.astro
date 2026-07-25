@@ -4,12 +4,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 <BaseLayout
   title="Privacy — StoreGauge"
-  description="How StoreGauge stores credentials, product data, diagnostics, widget snapshots, and optional MCP data locally on your Mac."
+  description="How StoreGauge stores credentials, product data, diagnostics, widget snapshots, and optional MCP data locally on your device."
 >
   <div class="container privacy-page">
     <header class="privacy-hero">
       <p class="kicker">Privacy, plainly</p>
-      <h1>Your store data stays on your Mac.</h1>
+      <h1>Your store data stays on your device.</h1>
       <p>StoreGauge is local-first software. There is no StoreGauge account, backend, telemetry service, advertising SDK, or hosted customer database.</p>
     </header>
 
@@ -29,19 +29,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <article class="policy-content">
         <section id="credentials">
           <h2>Credentials</h2>
-          <p>Apple <code>.p8</code> keys and complete Google service-account JSON keys are stored in macOS Keychain. StoreGauge reads them only to sign short-lived requests to the store provider you connected. Issuer IDs, key IDs, project IDs, vendor numbers, and report-bucket names are stored in the local application database.</p>
+          <p>Apple <code>.p8</code> keys and complete Google service-account JSON keys are stored in the Keychain on the Mac or iPhone where you added them. StoreGauge marks these Keychain items as device-only, so they do not migrate to another device through a backup. StoreGauge reads them only to sign short-lived requests to the store provider you connected. Issuer IDs, key IDs, project IDs, vendor numbers, and report-bucket names are stored in the local application database.</p>
         </section>
         <section id="store-data">
           <h2>Store data</h2>
-          <p>Apps, metrics, reviews, replies, releases, and metadata history are stored with SwiftData on your Mac. Raw Apple and Google report files are parsed locally and are not uploaded to StoreGauge or retained as a hosted copy.</p>
+          <p>Apps, metrics, reviews, replies, releases, and metadata history are stored with SwiftData on your Mac or iPhone. Raw Apple and Google report files are parsed locally and are not uploaded to StoreGauge or retained as a hosted copy.</p>
         </section>
         <section id="network">
           <h2>Network connections</h2>
           <p>StoreGauge connects directly to Apple App Store Connect, Google OAuth, Google Play, and Google Cloud Storage APIs. It may fetch public app icons from Apple or Google listings and currency rates from the public Frankfurter API. Direct-download builds contact this site’s signed Sparkle feed to check for updates.</p>
+          <p>On iPhone, enabling store activity notifications lets iOS run a short, best-effort background check for new reviews and release status. These requests go directly to the connected store. Results remain local, and StoreGauge posts local notifications without a StoreGauge notification server.</p>
         </section>
         <section id="translations">
           <h2>Translations</h2>
-          <p>Review translation uses Apple’s Translation framework. Translations are cached locally for the chosen target language. Language assets may be managed by macOS.</p>
+          <p>Review translation uses Apple’s Translation framework. Translations are cached locally for the chosen target language. Language assets may be managed by the device operating system.</p>
         </section>
         <section id="widgets">
           <h2>Widgets</h2>
@@ -60,7 +61,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <h2>Deleting data</h2>
           <p>Deleting an account removes its locally stored app history and Keychain secret. Removing StoreGauge and its application data removes the remaining local database. Archived apps retain their history until restored or their account is deleted.</p>
           <p>Questions or concerns can be reported in the <a href="https://github.com/Phil9l/storegauge/issues">public issue tracker</a>. The implementation is available for inspection in the <a href="https://github.com/Phil9l/storegauge">source repository</a>.</p>
-          <p class="policy-meta">Last updated: July 23, 2026</p>
+          <p class="policy-meta">Last updated: July 25, 2026</p>
         </section>
       </article>
     </div>

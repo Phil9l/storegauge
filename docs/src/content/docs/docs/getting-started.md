@@ -13,12 +13,24 @@ Download the latest Mac release, move StoreGauge to **Applications**, and launch
 The **Ready to connect** checklist validates the credential shape before StoreGauge contacts the provider. **Test & Add** then verifies live access and reports how many apps the credential can see. For Google Play, remember that creating a service account is not enough by itself: its `client_email` must also be invited in Play Console under **Users and permissions**.
 
 :::note[Local from the first launch]
-StoreGauge has no sign-in of its own. Store credentials go to macOS Keychain and imported product data stays in the local SwiftData store.
+StoreGauge has no sign-in of its own. Store credentials go to the Mac or iPhone Keychain and imported product data stays in the local SwiftData store.
 :::
 
 The iPhone client follows the same local-first model with its own Keychain and
 SwiftData store. It does not sync accounts or downloaded data with the Mac, so
 connect each account separately on the devices where you want to use it.
+
+## iPhone background alerts
+
+Enable **Store activity notifications** in StoreGauge’s iPhone Settings to let StoreGauge ask
+iOS for a short background check no earlier than hourly. Background checks fetch
+only new reviews and release status; analytics, financial reports, screenshots,
+and metadata history wait for a normal foreground sync.
+
+iOS decides when the task actually runs. Checks may be delayed when StoreGauge is
+rarely opened, Background App Refresh is disabled, or Low Power Mode is enabled.
+StoreGauge has no notification server, so it cannot promise exact hourly or
+immediate delivery.
 
 ## Choose a provider
 

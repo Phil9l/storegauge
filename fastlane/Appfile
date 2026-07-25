@@ -1,0 +1,5 @@
+app_identifier(ENV["STOREGAUGE_APP_IDENTIFIER"] || "com.bazun.storegauge")
+team_id(ENV["STOREGAUGE_TEAM_ID"] || "75RZ97C25R")
+
+apple_id(ENV["FASTLANE_USER"]) if ENV["FASTLANE_USER"]
+itc_team_id(ENV["FASTLANE_ITC_TEAM_ID"]) if ENV["FASTLANE_ITC_TEAM_ID"]

@@ -8,7 +8,9 @@
 
 import SwiftUI
 import SwiftData
+#if canImport(Sparkle) && !STOREGAUGE_APP_STORE
 import Sparkle
+#endif
 
 @main
 struct StoreGaugeApp: App {
@@ -17,16 +19,20 @@ struct StoreGaugeApp: App {
     #endif
 
     private let container: ModelContainer
+    #if canImport(Sparkle) && !STOREGAUGE_APP_STORE
     private let updaterController: SPUStandardUpdaterController
+    #endif
     @State private var model: AppModel
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
 
     init() {
+        #if canImport(Sparkle) && !STOREGAUGE_APP_STORE
         updaterController = SPUStandardUpdaterController(
             startingUpdater: true,
             updaterDelegate: nil,
             userDriverDelegate: nil
         )
+        #endif
         let container: ModelContainer
         do {
             let schema = Schema([Account.self, TrackedApp.self, Review.self, MetricPoint.self, StatusEvent.self,
@@ -52,11 +58,13 @@ struct StoreGaugeApp: App {
         }
         .defaultSize(width: 1240, height: 820)
         .commands {
+            #if canImport(Sparkle) && !STOREGAUGE_APP_STORE
             CommandGroup(after: .appInfo) {
                 Button("Check for Updates…") {
                     updaterController.checkForUpdates(nil)
                 }
             }
+            #endif
             CommandGroup(after: .toolbar) {
                 Button("Sync Now") { Task { await model.syncNow() } }
                     .keyboardShortcut("r", modifiers: .command)

@@ -212,6 +212,9 @@ struct MobileAccountForm: View {
                     "Open App Store Connect API keys",
                     destination: URL(string: "https://appstoreconnect.apple.com/access/integrations/api")!
                 )
+                Text("Create a dedicated key with the lowest role that covers the features you need. Use Admin only if you want access to every StoreGauge feature.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
 
             Section("Private key") {

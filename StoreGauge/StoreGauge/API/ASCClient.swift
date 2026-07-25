@@ -268,7 +268,7 @@ final class ASCClient {
         }
     }
 
-    /// Whether this key can reach the Users endpoint (a proxy for an all-apps admin key).
+    /// Verify the credentials by listing the apps visible to the key's role.
     func verifyConnection() async throws -> Int {
         let apps = try await listApps()
         return apps.count

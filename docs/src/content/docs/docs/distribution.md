@@ -5,6 +5,49 @@ description: Build, notarize, publish, and update StoreGauge using a DMG and Spa
 
 StoreGauge’s direct build is distributed as a signed, notarized DMG and checks a signed Sparkle feed hosted on GitHub Pages.
 
+## Fastlane
+
+The repository includes Fastlane entry points for both Apple clients. Install
+the locked Ruby dependencies first:
+
+```sh
+bundle install
+cp fastlane/.env.example fastlane/.env
+```
+
+Use `bundle exec fastlane ios verify` and `bundle exec fastlane mac verify` for
+tests and unsigned Release builds.
+
+The iPhone lanes are:
+
+- `ios build` — create a signed IPA without uploading it.
+- `ios beta` — choose the next build number and upload to TestFlight.
+- `ios release` — upload only the binary to its App Store version. Metadata,
+  screenshots, review submission, and automatic release stay off by default.
+
+The desktop lanes are:
+
+- `mac verify` — test shared code, build both desktop variants, and confirm
+  Sparkle exists only in the direct-download bundle.
+- `mac preflight` — validate the direct-release machine and signing inputs.
+- `mac direct` — build, sign, notarize, staple, and export the direct-download
+  DMG.
+- `mac app_store_build` — create a signed Sparkle-free Mac App Store package
+  without uploading it.
+- `mac app_store` — build and upload that package to its Mac App Store version.
+
+The upload lanes read a dedicated App Store Connect API key from the ignored
+`fastlane/.env` file, or fall back to the credential names in
+`~/.appstoreconnect/.env`. Keep the `.p8` file outside the repository. These
+release credentials are separate from the App Store Connect credentials
+entered by StoreGauge users.
+
+The `StoreGauge` target is the direct-download edition. `StoreGaugeAppStore`
+reuses the application source and product identity but has a separate scheme,
+Info.plist, entitlements, and compilation condition. It neither links nor
+embeds Sparkle and omits the feed keys, Sparkle Mach-service exceptions, and
+**Check for Updates…** command.
+
 ## One-time setup
 
 1. Create a **Developer ID Application** certificate in Xcode.

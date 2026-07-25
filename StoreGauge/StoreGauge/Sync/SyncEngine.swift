@@ -75,6 +75,39 @@ final class SyncEngine {
             try? context.save()
         }
     }
+
+    /// Short, notification-focused refresh for iOS background execution.
+    /// It deliberately skips analytics, financial reports, vitals, metadata
+    /// history, and app discovery so it can finish inside BGAppRefreshTask's
+    /// small runtime budget.
+    func syncBackgroundAlerts() async -> Bool {
+        let accounts = ((try? context.fetch(FetchDescriptor<Account>())) ?? [])
+            .filter { !$0.isDemo }
+            .sorted { $0.sortIndex < $1.sortIndex }
+        guard !accounts.isEmpty else { return false }
+
+        var completedAny = false
+        for account in accounts {
+            if Task.isCancelled { return false }
+            do {
+                switch account.platform {
+                case .appleAppStore:
+                    try await appleProvider.syncBackgroundAlerts(account: account)
+                case .googlePlay:
+                    try await googleProvider.syncBackgroundAlerts(account: account)
+                }
+                completedAny = true
+            } catch is CancellationError {
+                return false
+            } catch {
+                let detail = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+                DiagnosticLog.record(
+                    "\(account.platform.displayName) · Background alert refresh failed · \(account.name) · \(detail)"
+                )
+            }
+        }
+        return completedAny
+    }
 }
 
 // MARK: - Google Play provider
@@ -150,6 +183,23 @@ final class GooglePlaySyncProvider: StoreAccountSyncing {
             throw firstError
         }
         DiagnosticLog.record("Google Play · Sync completed · \(account.name) · \(summaries.count) apps")
+    }
+
+    func syncBackgroundAlerts(account: Account) async throws {
+        guard account.platform == platform else {
+            throw StoreProviderError.unsupportedOperation(account.platform, "Google Play background alerts")
+        }
+        let client = GooglePlayClient(credentials: try credentials(for: account))
+        let isFirstSync = account.lastSyncedAt == nil
+        for app in account.apps where app.isTracked {
+            try Task.checkCancellation()
+            try await syncApp(
+                app,
+                client: client,
+                isFirstSync: isFirstSync,
+                progress: { _ in }
+            )
+        }
     }
 
     private struct FinancialMetricKey: Hashable {
@@ -510,6 +560,7 @@ final class GooglePlaySyncProvider: StoreAccountSyncing {
             firstError = operationError(error, app: app, operation: "Production release")
         }
 
+        try Task.checkCancellation()
         if app.iconURLString == nil {
             app.iconURLString = await IconService.iconURL(for: app.remoteIdentifier, platform: platform)
         }
@@ -626,6 +677,24 @@ final class AppleAppStoreSyncProvider: StoreAccountSyncing {
         }
     }
 
+    func syncBackgroundAlerts(account: Account) async throws {
+        guard account.platform == platform else {
+            throw StoreProviderError.unsupportedOperation(account.platform, "App Store background alerts")
+        }
+        let client = ASCClient(credentials: try credentials(for: account))
+        let isFirstSync = account.lastSyncedAt == nil
+        for app in account.apps where app.isTracked {
+            try Task.checkCancellation()
+            await syncApp(
+                app,
+                client: client,
+                isFirstSync: isFirstSync,
+                progress: { _ in },
+                includeMetadata: false
+            )
+        }
+    }
+
     // MARK: Apps
 
     private func upsertApps(_ summaries: [AppSummary], account: Account, isFirstSync: Bool) {
@@ -649,7 +718,13 @@ final class AppleAppStoreSyncProvider: StoreAccountSyncing {
         }
     }
 
-    private func syncApp(_ app: TrackedApp, client: ASCClient, isFirstSync: Bool, progress: @escaping Progress) async {
+    private func syncApp(
+        _ app: TrackedApp,
+        client: ASCClient,
+        isFirstSync: Bool,
+        progress: @escaping Progress,
+        includeMetadata: Bool = true
+    ) async {
         progress("Syncing · \(app.name)")
 
         // Version / status
@@ -681,11 +756,13 @@ final class AppleAppStoreSyncProvider: StoreAccountSyncing {
             }
         }
 
+        guard !Task.isCancelled else { return }
         // Icon
         if app.iconURLString == nil {
             app.iconURLString = await IconService.iconURL(for: app.remoteIdentifier)
         }
 
+        guard !Task.isCancelled else { return }
         // Reviews
         let knownIDs = Set(app.reviews.map(\.remoteIdentifier))
         let existingByID = Dictionary(app.reviews.map { ($0.remoteIdentifier, $0) }, uniquingKeysWith: { a, _ in a })
@@ -724,7 +801,9 @@ final class AppleAppStoreSyncProvider: StoreAccountSyncing {
             }
         }
 
-        await syncMetadata(app, client: client)
+        if includeMetadata, !Task.isCancelled {
+            await syncMetadata(app, client: client)
+        }
         try? context.save()
     }
 

@@ -7,7 +7,7 @@ Open **Settings → Sync Health** to see every connected account in one place.
 
 For each account, StoreGauge shows:
 
-- whether its credential is available in macOS Keychain;
+- whether its credential is available in the device Keychain;
 - the latest sync attempt and last completely successful sync;
 - the newest locally stored product data;
 - the duration and error from the latest attempt;

@@ -232,6 +232,23 @@ final class AppModel {
         checkAnomalies()
     }
 
+    /// Refresh only review and release signals when iOS grants a short
+    /// background execution window.
+    func syncBackgroundAlerts() async -> Bool {
+        guard !isSyncing, settings.notificationsEnabled else { return false }
+        await notifier.refreshAuthorizationStatus()
+        guard notifier.isAuthorized else { return false }
+
+        isSyncing = true
+        defer {
+            isSyncing = false
+            syncActivity = ""
+        }
+        let succeeded = await engine.syncBackgroundAlerts()
+        recomputeBadges()
+        return succeeded
+    }
+
     // MARK: Anomaly alerts
 
     /// After a sync, flag apps whose downloads or proceeds swung sharply week-over-week.

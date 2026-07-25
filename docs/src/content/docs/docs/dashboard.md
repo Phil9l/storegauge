@@ -24,3 +24,10 @@ StoreGauge keeps labels specific when Apple and Google measure different stages 
 ## Alerts
 
 StoreGauge can notify you about new reviews, state changes, newly discovered apps, rollout completion, and unusual week-over-week movement. Configure notifications in Settings.
+
+On iPhone, enabling store activity notifications also schedules a lightweight
+local background check for reviews and release status no earlier than hourly.
+The Settings screen shows whether iOS Background App Refresh is available and
+the most recent completed background check. iOS controls the actual execution
+time, and Low Power Mode or disabled Background App Refresh can delay or prevent
+a check.
