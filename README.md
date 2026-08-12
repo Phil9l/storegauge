@@ -10,6 +10,7 @@
 </p>
 
 <p align="center">
+  <a href="https://apps.apple.com/us/app/storegauge/id6794583347"><img src="https://shieldcn.dev/badge/App%20Store-paid-0A84FF.svg?variant=secondary&amp;logo=appstore&amp;theme=blue" alt="Get the paid StoreGauge app for Mac and iPhone on the App Store" /></a>
   <a href="#requirements"><img src="https://shieldcn.dev/badge/platform-macOS%2015%2B%20%7C%20iOS%2018%2B-0A84FF.svg?variant=secondary&amp;logo=apple&amp;theme=blue" alt="macOS 15 or later and iOS 18 or later" /></a>
   <a href="#privacy"><img src="https://shieldcn.dev/badge/privacy-local--first-22C55E.svg?variant=secondary&amp;logo=lock&amp;theme=green" alt="Local-first privacy" /></a>
   <a href="LICENSE"><img src="https://shieldcn.dev/badge/license-PolyForm%20Noncommercial%201.0.0-8B5CF6.svg?variant=secondary&amp;theme=violet" alt="PolyForm Noncommercial 1.0.0 license" /></a>
@@ -29,7 +30,9 @@ short background review and release-status check no earlier than hourly. iOS
 chooses the actual execution time, so alerts are best-effort rather than a
 guaranteed hourly service.
 
-**[Website](https://phil9l.github.io/storegauge/)** · **[Documentation](https://phil9l.github.io/storegauge/docs/)** · **[Privacy](https://phil9l.github.io/storegauge/privacy/)** · **[Releases](https://github.com/Phil9l/storegauge/releases)**
+**[App Store](https://apps.apple.com/us/app/storegauge/id6794583347)** · **[Website](https://phil9l.github.io/storegauge/)** · **[Documentation](https://phil9l.github.io/storegauge/docs/)** · **[Privacy](https://phil9l.github.io/storegauge/privacy/)** · **[Releases](https://github.com/Phil9l/storegauge/releases)**
+
+The paid App Store version includes StoreGauge for Mac and iPhone and supports ongoing development. The GitHub version is free for noncommercial use.
 
 > [!IMPORTANT]
 > Your private key stays in the device Keychain. StoreGauge has no account system, backend, telemetry, or cloud database.

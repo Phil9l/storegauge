@@ -9,7 +9,7 @@ export default defineConfig({
     sitemap(),
     starlight({
       title: "StoreGauge",
-      description: "Private App Store Connect and Google Play analytics for macOS.",
+      description: "Private App Store Connect and Google Play analytics for Mac and iPhone.",
       favicon: "/assets/storegauge.svg",
       disable404Route: true,
       customCss: ["./src/styles/starlight.css"],

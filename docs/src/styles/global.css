@@ -129,7 +129,10 @@ button, summary { font: inherit; }
 .button-secondary { color: var(--white); border-color: #344157; background: #111c2f; }
 .button-dark { color: var(--white); background: var(--ink-950); }
 .button-light { color: var(--ink-950); background: var(--white); }
-.requirements { margin: 17px 0 0; color: #718096; font-size: 12px; }
+.button-outline { color: var(--ink-950); border-color: var(--slate-300); background: var(--white); }
+.button-outline:hover { border-color: var(--slate-500); background: var(--slate-100); }
+.purchase-note { max-width: 570px; margin: 16px 0 0; color: #9ca9bd; font-size: 12px; line-height: 1.55; }
+.requirements { margin: 6px 0 0; color: #718096; font-size: 12px; }
 
 .product-shot { margin: 0; }
 .product-shot-trigger { position: relative; width: 100%; display: block; padding: 0; overflow: hidden; color: var(--white); border: 1px solid #202a3c; border-radius: 22px; background: #000; box-shadow: 0 42px 100px rgba(0,0,0,.5); cursor: zoom-in; }

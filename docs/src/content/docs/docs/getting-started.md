@@ -3,7 +3,7 @@ title: Getting started
 description: Install StoreGauge, connect an account, and choose the apps shown in your dashboard.
 ---
 
-Download the latest Mac release, move StoreGauge to **Applications**, and launch it. StoreGauge requires macOS 15 or later. The iPhone client requires iOS 18 or later.
+Install StoreGauge for Mac or iPhone from the [App Store](https://apps.apple.com/us/app/storegauge/id6794583347). The paid App Store version supports ongoing development; the [GitHub project](https://github.com/Phil9l/storegauge) provides the source and direct Mac releases free for noncommercial use. StoreGauge requires macOS 15 or later or iOS 18 or later.
 
 1. Open **Accounts** from the bottom of the sidebar.
 2. Choose **+**, then select App Store Connect or Google Play.

@@ -18,10 +18,11 @@ New providers must remain local-first, avoid a StoreGauge cloud dependency, pres
 
 ## iPhone client
 
-The iPhone client is available in the source tree as the **StoreGaugeMobile**
-scheme. It provides local dashboards, review triage and replies, release and
-metadata visibility, notifications, themes, and account management using the
-same store integrations as the Mac app.
+The iPhone client is available on the [App Store](https://apps.apple.com/us/app/storegauge/id6794583347)
+and in the source tree as the **StoreGaugeMobile** scheme. It provides local
+dashboards, review triage and replies, release and metadata visibility,
+notifications, themes, and account management using the same store integrations
+as the Mac app.
 
 It is deliberately independent rather than a synced companion: credentials stay
 in the iPhone Keychain and downloaded data stays in that device’s SwiftData
