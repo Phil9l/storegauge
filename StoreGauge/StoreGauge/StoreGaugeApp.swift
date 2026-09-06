@@ -47,7 +47,9 @@ struct StoreGaugeApp: App {
     }
 
     var body: some Scene {
-        WindowGroup(id: "main") {
+        // A single dashboard window: reopening from the menu bar or the Dock brings
+        // the existing one forward instead of stacking duplicates.
+        Window("StoreGauge", id: "main") {
             RootView()
                 .environment(model)
                 .modelContainer(container)
