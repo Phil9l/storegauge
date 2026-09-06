@@ -87,6 +87,18 @@ extension MetricKind {
     }
 }
 
+/// Distinct colours for per-app chart series and breakdown rows. Apps are coloured by
+/// their position in the (name-sorted) app list so the colour of an app stays put while
+/// charts, legends and the breakdown table are read side by side.
+enum SeriesPalette {
+    static let colors: [Color] = [.blue, .green, .orange, .purple, .pink, .teal,
+                                  .indigo, .mint, .cyan, .yellow, .brown, .red]
+
+    static func color(_ index: Int) -> Color {
+        colors[((index % colors.count) + colors.count) % colors.count]
+    }
+}
+
 extension Int {
     /// Colour for a 1–5 star rating.
     var ratingColor: Color {

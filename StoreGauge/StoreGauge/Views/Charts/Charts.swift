@@ -369,6 +369,8 @@ struct StackedBarChart: View {
         let points: [DatedValue]
     }
     let series: [Series]
+    var isCurrency = false
+    var currencyCode = "USD"
     var markers: [Date] = []
     var annotations: [ChartAnnotationMark] = []
     var onAddAnnotation: ((Date) -> Void)? = nil
@@ -399,6 +401,9 @@ struct StackedBarChart: View {
         return allDates.min { abs($0.timeIntervalSince(selectedDate)) < abs($1.timeIntervalSince(selectedDate)) }
     }
     private func value(on day: Date, _ s: Series) -> Double { s.points.first { $0.date == day }?.value ?? 0 }
+    private func label(_ v: Double) -> String {
+        isCurrency ? Format.currency(v, code: currencyCode) : Format.int(v)
+    }
     private var clippedMarkers: [Date] {
         let dates = series.flatMap { $0.points.map(\.date) }
         guard let lo = dates.min(), let hi = dates.max() else { return [] }
@@ -406,6 +411,29 @@ struct StackedBarChart: View {
     }
 
     var body: some View {
+        // The legend lives outside the Chart and *before* it, so a hovered callout
+        // (which overflows the plot area upwards) draws over the chips instead of
+        // sliding underneath them.
+        VStack(alignment: .leading, spacing: 8) {
+            if series.count > 1 { legend }
+            chart
+        }
+    }
+
+    private var legend: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 6) {
+                ForEach(series) { item in
+                    legendButton(item)
+                }
+            }
+            .padding(.vertical, 1)
+        }
+        .scrollBounceBehavior(.basedOnSize, axes: .horizontal)
+        .scrollIndicators(.never)
+    }
+
+    private var chart: some View {
         Chart {
             ForEach(visibleSeries) { s in
                 ForEach(s.points) { p in
@@ -428,19 +456,17 @@ struct StackedBarChart: View {
             }
         }
         .chartForegroundStyleScale(domain: series.map(\.name), range: series.map(\.color))
-        .chartLegend(position: .top, alignment: .leading, spacing: 8) {
-            HStack(spacing: 6) {
-                ForEach(series) { item in
-                    legendButton(item)
-                }
-            }
-        }
+        .chartLegend(.hidden)
         .chartXSelection(value: $selectedDate)
         .chartAnnotations(annotations, hovered: selectedDate ?? selectedDay, onAdd: onAddAnnotation, onEdit: onEditAnnotation)
         .chartYAxis {
             AxisMarks { value in
                 AxisGridLine().foregroundStyle(.quaternary)
-                if let d = value.as(Double.self) { AxisValueLabel { Text(Format.compact(d)) } }
+                if let d = value.as(Double.self) {
+                    AxisValueLabel {
+                        Text(isCurrency ? Format.currency(d, code: currencyCode, compact: true) : Format.compact(d))
+                    }
+                }
             }
         }
         .chartXAxis {
@@ -459,11 +485,11 @@ struct StackedBarChart: View {
                     Circle().fill(s.color).frame(width: 6, height: 6)
                     Text(s.name.components(separatedBy: " (").first ?? s.name).font(.caption2)
                     Spacer(minLength: 8)
-                    Text(Format.int(value(on: day, s))).font(.caption2.weight(.semibold))
+                    Text(label(value(on: day, s))).font(.caption2.weight(.semibold))
                 }
             }
             Divider()
-            HStack { Text("Total").font(.caption2); Spacer(); Text(Format.int(total)).font(.caption2.weight(.bold)) }
+            HStack { Text("Total").font(.caption2); Spacer(); Text(label(total)).font(.caption2.weight(.bold)) }
             let dayNotes = notes(on: day)
             if !dayNotes.isEmpty {
                 Divider()
@@ -475,7 +501,7 @@ struct StackedBarChart: View {
                 }
             }
         }
-        .padding(8).frame(width: 140)
+        .padding(8).frame(width: isCurrency ? 170 : 140)
         .background(RoundedRectangle(cornerRadius: 6).fill(.regularMaterial))
         .overlay(RoundedRectangle(cornerRadius: 6).strokeBorder(.quaternary))
     }
@@ -492,7 +518,12 @@ struct StackedBarChart: View {
         } label: {
             HStack(spacing: 4) {
                 Circle().fill(item.color).frame(width: 7, height: 7)
-                Text(item.name).font(.caption2.weight(.medium))
+                Text(item.name)
+                    .font(.caption2.weight(.medium))
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .frame(maxWidth: 130, alignment: .leading)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .foregroundStyle(isVisible ? .primary : .secondary)
             .opacity(isVisible ? 1 : 0.45)
@@ -502,7 +533,7 @@ struct StackedBarChart: View {
             .contentShape(Capsule())
         }
         .buttonStyle(.plain)
-        .help(isVisible ? (canHide ? "Hide \(item.name)" : "At least one download type must remain visible")
+        .help(isVisible ? (canHide ? "Hide \(item.name)" : "At least one series must remain visible")
                         : "Show \(item.name)")
         .accessibilityValue(isVisible ? "Shown" : "Hidden")
     }

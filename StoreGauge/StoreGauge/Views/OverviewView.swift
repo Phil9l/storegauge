@@ -11,6 +11,7 @@ import SwiftData
 struct OverviewView: View {
     @Environment(AppModel.self) private var model
     @Query(sort: \TrackedApp.name) private var allApps: [TrackedApp]
+    @AppStorage("overviewBreakdownByApp") private var breakdownByApp = false
     @State private var rangeDays = 30
 
     private var settings: AppSettings { model.settings }
@@ -25,6 +26,9 @@ struct OverviewView: View {
         MetricsAggregator(apps: selectedApps, fx: model.fx, currency: settings.displayCurrency)
     }
     private var reviews: [Review] { selectedApps.flatMap { $0.reviews } }
+    /// A per-app split only says something once there are two apps to compare.
+    private var canBreakDown: Bool { selectedApps.count > 1 }
+    private var showsBreakdown: Bool { breakdownByApp && canBreakDown }
 
     var body: some View {
         ScrollView {
@@ -38,6 +42,7 @@ struct OverviewView: View {
                         .frame(height: 300)
                 } else {
                     kpiGrid
+                    if showsBreakdown { breakdownCard }
                     if hasAppleSales { proceedsCard }
                     if agg.hasDownloads {
                         HStack(alignment: .top, spacing: 14) {
@@ -86,6 +91,14 @@ struct OverviewView: View {
                     .font(.subheadline).foregroundStyle(.secondary)
             }
             Spacer()
+            Toggle(isOn: $breakdownByApp) {
+                Label("Breakdown", systemImage: "chart.bar.doc.horizontal")
+            }
+            .toggleStyle(.button)
+            .disabled(!canBreakDown)
+            .help(canBreakDown
+                  ? "Split proceeds, downloads and ratings per app"
+                  : "Select at least two apps to split metrics per app")
             Picker("", selection: $rangeDays) {
                 Text("7D").tag(7)
                 Text("30D").tag(30)
@@ -190,14 +203,189 @@ struct OverviewView: View {
         return Format.percentRate(value)
     }
 
+    // MARK: Per-app breakdown
+
+    private func aggregator(for app: TrackedApp) -> MetricsAggregator {
+        MetricsAggregator(apps: [app], fx: model.fx, currency: settings.displayCurrency)
+    }
+
+    /// Colour by position in the full app list, so an app keeps the same colour in
+    /// every chart and table regardless of how the rows happen to sort today.
+    private func seriesColor(for app: TrackedApp) -> Color {
+        SeriesPalette.color(visibleApps.firstIndex { $0.id == app.id } ?? 0)
+    }
+
+    /// One chart series per app, dropping apps with nothing to plot.
+    private func perAppSeries(_ points: (MetricsAggregator) -> [DatedValue]) -> [StackedBarChart.Series] {
+        selectedApps.compactMap { app in
+            let values = points(aggregator(for: app))
+            guard values.contains(where: { $0.value > 0 }) else { return nil }
+            return StackedBarChart.Series(id: app.id.uuidString, name: app.name,
+                                          color: seriesColor(for: app), points: values)
+        }
+    }
+
+    private struct AppBreakdown: Identifiable {
+        let app: TrackedApp
+        let color: Color
+        let downloads: Double
+        let downloadsDelta: Double?
+        let proceeds: Double
+        let proceedsDelta: Double?
+        let grossSales: Double
+        let hasSales: Bool
+        let hasGoogleFinancials: Bool
+        let avgRating: Double
+        let reviewCount: Int
+        let needsReply: Int
+        var id: UUID { app.id }
+    }
+
+    private var breakdownRows: [AppBreakdown] {
+        selectedApps.map { app in
+            let a = aggregator(for: app)
+            let rated = app.reviews.filter { $0.rating > 0 }
+            return AppBreakdown(
+                app: app,
+                color: seriesColor(for: app),
+                downloads: a.downloadTotal(days: rangeDays),
+                downloadsDelta: a.downloadDelta(days: rangeDays),
+                proceeds: a.total(.proceeds, days: rangeDays),
+                proceedsDelta: a.delta(.proceeds, days: rangeDays),
+                grossSales: a.total(.grossSales, days: rangeDays),
+                hasSales: app.capabilities.contains(.sales),
+                hasGoogleFinancials: a.hasAny(.grossSales) || a.hasAny(.netEarnings),
+                avgRating: rated.isEmpty ? 0 : Double(rated.reduce(0) { $0 + $1.rating }) / Double(rated.count),
+                reviewCount: app.reviews.count,
+                needsReply: app.reviews.filter(\.needsAttention).count
+            )
+        }
+        .sorted {
+            if $0.proceeds != $1.proceeds { return $0.proceeds > $1.proceeds }
+            if $0.grossSales != $1.grossSales { return $0.grossSales > $1.grossSales }
+            if $0.downloads != $1.downloads { return $0.downloads > $1.downloads }
+            return $0.app.name.localizedCaseInsensitiveCompare($1.app.name) == .orderedAscending
+        }
+    }
+
+    private var breakdownCard: some View {
+        let rows = breakdownRows
+        return ChartCard(title: "By App", symbol: "chart.bar.doc.horizontal") {
+            Grid(alignment: .leading, horizontalSpacing: 16, verticalSpacing: 8) {
+                GridRow {
+                    Text("App")
+                    if agg.hasDownloads { Text("Downloads").gridColumnAlignment(.trailing) }
+                    if hasAppleSales { Text("Proceeds").gridColumnAlignment(.trailing) }
+                    if hasGoogleFinancialData { Text("Play Gross").gridColumnAlignment(.trailing) }
+                    Text("Rating").gridColumnAlignment(.trailing)
+                    Text("Reviews").gridColumnAlignment(.trailing)
+                    Text("Needs Reply").gridColumnAlignment(.trailing)
+                }
+                .font(.caption2.weight(.semibold))
+                .foregroundStyle(.secondary)
+
+                Divider().gridCellColumns(breakdownColumnCount)
+
+                ForEach(rows) { row in
+                    GridRow {
+                        HStack(spacing: 7) {
+                            Capsule().fill(row.color).frame(width: 3, height: 18)
+                            AppIconView(app: row.app, size: 22, showsStoreBadge: true)
+                            Text(row.app.name).font(.callout).lineLimit(1)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        if agg.hasDownloads {
+                            breakdownValue(Format.int(row.downloads), delta: row.downloadsDelta,
+                                           dimmed: row.downloads == 0)
+                        }
+                        if hasAppleSales {
+                            breakdownValue(row.hasSales
+                                           ? Format.currency(row.proceeds, code: settings.displayCurrency, compact: true)
+                                           : "—",
+                                           delta: row.proceedsDelta, dimmed: !row.hasSales || row.proceeds == 0)
+                        }
+                        if hasGoogleFinancialData {
+                            breakdownValue(row.hasGoogleFinancials
+                                           ? Format.currency(row.grossSales, code: settings.displayCurrency, compact: true)
+                                           : "—",
+                                           dimmed: !row.hasGoogleFinancials || row.grossSales == 0)
+                        }
+                        HStack(spacing: 4) {
+                            if row.avgRating > 0 {
+                                Image(systemName: "star.fill").font(.system(size: 8))
+                                    .foregroundStyle(Int(row.avgRating.rounded()).ratingColor)
+                            }
+                            Text(row.avgRating > 0 ? String(format: "%.2f", row.avgRating) : "—")
+                                .font(.callout.monospacedDigit())
+                                .foregroundStyle(row.avgRating > 0 ? .primary : .secondary)
+                        }
+                        breakdownValue("\(row.reviewCount)", dimmed: row.reviewCount == 0)
+                        Text("\(row.needsReply)")
+                            .font(.callout.monospacedDigit().weight(row.needsReply > 0 ? .semibold : .regular))
+                            .foregroundStyle(row.needsReply > 0 ? Color.orange : .secondary)
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture { model.navigationRequest = StoreGaugeNavigationRequest(destination: .app(row.app.id)) }
+                    .help("Open \(row.app.name)")
+                }
+
+                Divider().gridCellColumns(breakdownColumnCount)
+
+                GridRow {
+                    Text("All selected apps").font(.callout.weight(.semibold))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    if agg.hasDownloads {
+                        breakdownValue(Format.int(agg.downloadTotal(days: rangeDays)), emphasised: true)
+                    }
+                    if hasAppleSales {
+                        breakdownValue(Format.currency(agg.total(.proceeds, days: rangeDays),
+                                                       code: settings.displayCurrency, compact: true),
+                                       emphasised: true)
+                    }
+                    if hasGoogleFinancialData {
+                        breakdownValue(Format.currency(agg.total(.grossSales, days: rangeDays),
+                                                       code: settings.displayCurrency, compact: true),
+                                       emphasised: true)
+                    }
+                    breakdownValue(avgRating > 0 ? String(format: "%.2f", avgRating) : "—", emphasised: true)
+                    breakdownValue("\(rows.reduce(0) { $0 + $1.reviewCount })", emphasised: true)
+                    breakdownValue("\(rows.reduce(0) { $0 + $1.needsReply })", emphasised: true)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
+    /// Columns vary with the data on screen; the dividers need the current count.
+    private var breakdownColumnCount: Int {
+        4 + (agg.hasDownloads ? 1 : 0) + (hasAppleSales ? 1 : 0) + (hasGoogleFinancialData ? 1 : 0)
+    }
+
+    private func breakdownValue(_ text: String, delta: Double? = nil,
+                                dimmed: Bool = false, emphasised: Bool = false) -> some View {
+        HStack(spacing: 5) {
+            Text(text)
+                .font(.callout.monospacedDigit().weight(emphasised ? .semibold : .regular))
+                .foregroundStyle(dimmed ? AnyShapeStyle(.secondary) : AnyShapeStyle(.primary))
+                .lineLimit(1)
+            DeltaBadge(fraction: delta)
+        }
+    }
+
     // MARK: Cards
 
     private var proceedsCard: some View {
-        ChartCard(title: "Proceeds", symbol: "dollarsign.circle.fill",
-                  subtitle: Format.currency(agg.total(.proceeds, days: rangeDays), code: settings.displayCurrency)) {
-            TrendChart(series: agg.salesSeries(.proceeds, days: rangeDays), tint: .green,
-                       isCurrency: true, currencyCode: settings.displayCurrency)
-                .frame(height: 200)
+        let perApp = showsBreakdown ? perAppSeries({ $0.salesSeries(.proceeds, days: rangeDays) }) : []
+        return ChartCard(title: "Proceeds", symbol: "dollarsign.circle.fill",
+                         subtitle: Format.currency(agg.total(.proceeds, days: rangeDays), code: settings.displayCurrency)) {
+            if perApp.count > 1 {
+                StackedBarChart(series: perApp, isCurrency: true, currencyCode: settings.displayCurrency)
+                    .frame(height: 200)
+            } else {
+                TrendChart(series: agg.salesSeries(.proceeds, days: rangeDays), tint: .green,
+                           isCurrency: true, currencyCode: settings.displayCurrency)
+                    .frame(height: 200)
+            }
             if !agg.hasAny(.proceeds) { incomeHint }
         }
     }
@@ -237,9 +425,12 @@ struct OverviewView: View {
         let (newS, upd) = agg.installBreakdown(days: rangeDays)
         let updTotal = upd.reduce(0) { $0 + $1.value }
         let newTotal = newS.reduce(0) { $0 + $1.value }
+        let perApp = showsBreakdown ? perAppSeries({ $0.downloadSeries(days: rangeDays) }) : []
         return ChartCard(title: "Downloads", symbol: "arrow.down.circle.fill",
                          subtitle: Format.int(agg.downloadTotal(days: rangeDays))) {
-            if updTotal > 0 {
+            if perApp.count > 1 {
+                StackedBarChart(series: perApp).frame(height: 180)
+            } else if updTotal > 0 {
                 StackedBarChart(series: [
                     .init(id: "new", name: "New installs (\(Format.compact(newTotal)))", color: .blue, points: newS),
                     .init(id: "updates", name: "Updates (\(Format.compact(updTotal)))", color: .teal, points: upd),
