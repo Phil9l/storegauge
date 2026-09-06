@@ -23,6 +23,7 @@ struct RootView: View {
     @Query(sort: \TrackedApp.name) private var apps: [TrackedApp]
     @AppStorage("selectedSettingsSection") private var selectedSettingsSection = SettingsSection.accounts
     @State private var selection: SidebarItem? = .overview
+    @AppStorage("shortcutHintWhileCommandHeld") private var shortcutHintWhileCommandHeld = true
     @State private var keyMonitor = KeyboardMonitor()
     @State private var showingAddAccount = false
 
@@ -50,18 +51,29 @@ struct RootView: View {
                     } detail: {
                         detail
                     }
-                    StatusBar()
+                    StatusBar(shortcutHint: keyMonitor.showHint,
+                              shortcutsVisible: keyMonitor.showOverlay,
+                              toggleShortcuts: { keyMonitor.toggleOverlay() })
                 }
             }
         }
         .overlay {
             if keyMonitor.showOverlay {
-                ShortcutsOverlay(shortcuts: contextShortcuts).transition(.opacity)
+                ShortcutsOverlay(shortcuts: contextShortcuts) { keyMonitor.dismissOverlay() }
+                    .transition(.opacity)
             }
         }
+        .background { shortcutKeyHandlers }
         .animation(.easeInOut(duration: 0.12), value: keyMonitor.showOverlay)
+        .animation(.easeInOut(duration: 0.15), value: keyMonitor.showHint)
         .sheet(isPresented: $showingAddAccount) { AccountFormView(existing: nil) }
-        .onAppear { keyMonitor.start() }
+        .onAppear {
+            keyMonitor.hintWhileCommandHeld = shortcutHintWhileCommandHeld
+            keyMonitor.start()
+        }
+        .onChange(of: shortcutHintWhileCommandHeld) { _, enabled in
+            keyMonitor.hintWhileCommandHeld = enabled
+        }
         .onChange(of: model.navigationRequest) { _, request in
             guard let request else { return }
             switch request.destination {
@@ -72,10 +84,26 @@ struct RootView: View {
         }
     }
 
+    /// ⌘/ works on the welcome screen too, where there is no status bar to host it.
+    /// Esc only exists while the HUD is up so it never swallows other cancels.
+    @ViewBuilder private var shortcutKeyHandlers: some View {
+        if accounts.isEmpty {
+            Button("Show Keyboard Shortcuts") { keyMonitor.toggleOverlay() }
+                .keyboardShortcut("/", modifiers: .command)
+                .opacity(0)
+        }
+        if keyMonitor.showOverlay {
+            Button("Close Keyboard Shortcuts") { keyMonitor.dismissOverlay() }
+                .keyboardShortcut(.cancelAction)
+                .opacity(0)
+        }
+    }
+
     private var contextShortcuts: [ShortcutHint] {
         var list: [ShortcutHint] = [
             .init(keys: "⌘R", action: "Sync now"),
             .init(keys: "⌘,", action: "Settings"),
+            .init(keys: "⌘/", action: "Show or hide this list"),
         ]
         switch selection {
         case .reviews:
@@ -305,6 +333,9 @@ struct AppSidebarRow: View {
 // MARK: - Global status bar
 
 struct StatusBar: View {
+    var shortcutHint = false
+    var shortcutsVisible = false
+    var toggleShortcuts: () -> Void = {}
     @Environment(AppModel.self) private var model
     @Environment(\.openSettings) private var openSettings
     @AppStorage("selectedSettingsSection") private var selectedSettingsSection = SettingsSection.accounts
@@ -339,6 +370,9 @@ struct StatusBar: View {
                         .font(.caption).foregroundStyle(.secondary).lineLimit(1)
                 }
                 Spacer()
+                ShortcutsStatusButton(isHinting: shortcutHint,
+                                      isShowingOverlay: shortcutsVisible,
+                                      action: toggleShortcuts)
                 TimelineView(.periodic(from: .now, by: 2)) { _ in
                     MCPStatusButton {
                         selectedSettingsSection = .integrations

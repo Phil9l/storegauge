@@ -2,7 +2,9 @@
 //  ShortcutsOverlay.swift
 //  StoreGauge
 //
-//  A HUD listing the current screen's keyboard shortcuts, shown while ⌘ is held.
+//  A HUD listing the current screen's keyboard shortcuts. It never takes over the
+//  window on its own: holding ⌘ only lights up a hint in the status bar, and the
+//  list itself opens on ⌘/ or from that status-bar button.
 //
 
 import SwiftUI
@@ -13,9 +15,17 @@ import AppKit
 @MainActor
 @Observable
 final class KeyboardMonitor {
+    /// The full HUD. Only ever shown on request (⌘/ or the status-bar button).
     private(set) var showOverlay = false
+    /// A quiet nudge in the status bar while ⌘ is held down.
+    private(set) var showHint = false
+    /// Mirrors the "Hint at shortcuts while ⌘ is held" preference.
+    var hintWhileCommandHeld = true {
+        didSet { if !hintWhileCommandHeld { showHint = false } }
+    }
+
     private var commandHeld = false {
-        didSet { commandHeld ? scheduleShow() : (showOverlay = false) }
+        didSet { commandHeld ? scheduleHint() : (showHint = false) }
     }
     #if os(macOS)
     private var monitor: Any?
@@ -38,12 +48,22 @@ final class KeyboardMonitor {
         #endif
     }
 
-    /// Small delay so plain ⌘-shortcuts (⌘E, ⌘R…) don't flash the HUD.
-    private func scheduleShow() {
+    func toggleOverlay() {
+        showOverlay.toggle()
+        showHint = false
+    }
+
+    func dismissOverlay() {
+        showOverlay = false
+    }
+
+    /// Long enough that ordinary ⌘-shortcuts (⌘E, ⌘R…) never light the hint.
+    private func scheduleHint() {
+        guard hintWhileCommandHeld else { return }
         Task { [weak self] in
-            try? await Task.sleep(for: .milliseconds(450))
-            guard let self, self.commandHeld else { return }
-            self.showOverlay = true
+            try? await Task.sleep(for: .milliseconds(700))
+            guard let self, self.commandHeld, self.hintWhileCommandHeld, !self.showOverlay else { return }
+            self.showHint = true
         }
     }
 }
@@ -56,10 +76,33 @@ struct ShortcutHint: Identifiable {
 
 struct ShortcutsOverlay: View {
     let shortcuts: [ShortcutHint]
+    var dismiss: () -> Void = {}
 
     var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(.black.opacity(0.14))
+                .ignoresSafeArea()
+                .contentShape(Rectangle())
+                .onTapGesture(perform: dismiss)
+            panel
+        }
+    }
+
+    private var panel: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Label("Keyboard Shortcuts", systemImage: "command").font(.headline)
+            HStack {
+                Label("Keyboard Shortcuts", systemImage: "command").font(.headline)
+                Spacer()
+                Button(action: dismiss) {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.title3)
+                        .foregroundStyle(.tertiary)
+                }
+                .buttonStyle(.plain)
+                .help("Close (esc)")
+                .accessibilityLabel("Close keyboard shortcuts")
+            }
             VStack(alignment: .leading, spacing: 7) {
                 ForEach(shortcuts) { s in
                     HStack(spacing: 12) {
@@ -73,12 +116,43 @@ struct ShortcutsOverlay: View {
                     }
                 }
             }
+            Text("Press ⌘/ or esc to close.")
+                .font(.caption2).foregroundStyle(.secondary)
         }
         .padding(22)
         .frame(width: 340)
         .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(.regularMaterial))
         .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).strokeBorder(.quaternary))
         .shadow(color: .black.opacity(0.25), radius: 24, y: 8)
-        .allowsHitTesting(false)
+    }
+}
+
+/// Status-bar affordance: always available, and while ⌘ is held it expands into a
+/// reminder that the full list is one keystroke away.
+struct ShortcutsStatusButton: View {
+    let isHinting: Bool
+    let isShowingOverlay: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 4) {
+                Image(systemName: "keyboard")
+                // One label that swaps outright: crossfading two Texts in place
+                // leaves them briefly overlapping and unreadable.
+                Text(isHinting ? "Press ⌘/ for shortcuts" : "⌘/")
+                    .monospaced(!isHinting)
+                    .lineLimit(1)
+                    .contentTransition(.identity)
+            }
+            .font(.caption)
+            .foregroundStyle(isHinting || isShowingOverlay ? AnyShapeStyle(.tint) : AnyShapeStyle(.secondary))
+            .padding(.horizontal, 5).padding(.vertical, 1)
+            .background(Capsule().fill(.tint.opacity(isHinting ? 0.12 : 0)))
+        }
+        .buttonStyle(.plain)
+        .keyboardShortcut("/", modifiers: .command)
+        .help("Show keyboard shortcuts for this screen (⌘/)")
+        .accessibilityLabel("Keyboard shortcuts")
     }
 }

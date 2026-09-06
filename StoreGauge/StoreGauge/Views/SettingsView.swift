@@ -795,6 +795,7 @@ struct GeneralSettingsView: View {
     @Bindable var settings: AppSettings
     @Environment(AppModel.self) private var model
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
+    @AppStorage("shortcutHintWhileCommandHeld") private var shortcutHintWhileCommandHeld = true
     @State private var supportedTranslationLanguages: [Locale.Language] = []
     @State private var systemLanguageRevision = 0
 
@@ -853,6 +854,11 @@ struct GeneralSettingsView: View {
                     .onChange(of: settings.menuBarOnly) { model.applyActivationPolicy() }
                 Toggle("Launch at login", isOn: $settings.launchAtLogin)
                     .onChange(of: settings.launchAtLogin) { model.updateLoginItem() }
+            }
+            Section("Keyboard") {
+                Toggle("Hint at shortcuts while ⌘ is held", isOn: $shortcutHintWhileCommandHeld)
+                Text("The full list opens with ⌘/ or the Shortcuts button in the status bar, whether or not the hint is on.")
+                    .font(.caption2).foregroundStyle(.secondary)
             }
             Section("Diagnostics") {
                 HStack {
